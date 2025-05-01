@@ -1,6 +1,6 @@
-import Link from "next/link"
-import { Anvil } from "lucide-react"
-import { Button } from "@/components/ui/button"
+import Link from "next/link";
+import { Anvil } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 export function Header() {
   return (
@@ -15,18 +15,18 @@ export function Header() {
           </Link>
           <nav className="hidden gap-6 md:flex">
             <Link
-              href="#features"
+              href="#about"
               className="flex items-center text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
             >
-              Features
+              About
             </Link>
             <Link
-              href="#portfolio"
+              href="#services"
               className="flex items-center text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
             >
-              Portfolio
+              Services
             </Link>
-            <Link
+            {/* <Link
               href="#pricing"
               className="flex items-center text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
             >
@@ -43,18 +43,15 @@ export function Header() {
               className="flex items-center text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
             >
               Contact
-            </Link>
+            </Link> */}
           </nav>
         </div>
         <div className="flex flex-1 items-center justify-end space-x-4">
           <nav className="flex items-center space-x-2">
-            <Button variant="ghost" size="sm" className="hidden sm:flex">
-              Log in
-            </Button>
             <Button size="sm">Get Started</Button>
           </nav>
         </div>
       </div>
     </header>
-  )
+  );
 }
