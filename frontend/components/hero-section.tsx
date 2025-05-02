@@ -2,8 +2,20 @@
 
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useEffect, useRef } from "react";
 
 export function HeroSection() {
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  // Ensure video plays when component mounts
+  useEffect(() => {
+    if (videoRef.current) {
+      videoRef.current.play().catch((error) => {
+        console.error("Error playing video:", error);
+      });
+    }
+  }, []);
+
   const scrollToSection = (sectionId: string) => {
     const section = document.getElementById(sectionId);
     if (section) {
@@ -16,18 +28,26 @@ export function HeroSection() {
   };
 
   return (
-    <section id="home" className="relative w-full h-screen flex items-center">
-      {/* Hero Background Image */}
-      <div
-        className="absolute inset-0 z-0 bg-cover bg-center"
-        style={{
-          backgroundImage: "url('/hero.png')",
-          backgroundPosition: "center",
-          backgroundSize: "cover",
-        }}
-      >
+    <section
+      id="/"
+      className="relative w-full h-screen flex items-center overflow-hidden"
+    >
+      {/* Video Background */}
+      <div className="absolute inset-0 z-0">
+        <video
+          ref={videoRef}
+          className="absolute min-w-full min-h-full object-cover"
+          autoPlay
+          muted
+          loop
+          playsInline
+          poster="/hero.png" // Fallback image while video loads
+        >
+          <source src="/webforge-hero-video.mp4" type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
         {/* Overlay to ensure text readability */}
-        <div className="absolute inset-0 bg-black/30"></div>
+        <div className="absolute inset-0 bg-black/40"></div>
       </div>
 
       {/* Content */}
@@ -40,7 +60,7 @@ export function HeroSection() {
             Turning your vision into powerful, handcrafted web solutions
           </p>
           {/* <div className="flex flex-col gap-4 sm:flex-row">
-            <Button
+            {/* <Button
               size="lg"
               className="inline-flex items-center gap-2 bg-webforge-accent hover:bg-webforge-accent/90 text-white"
               onClick={() => scrollToSection("quote")}
@@ -54,8 +74,8 @@ export function HeroSection() {
               onClick={() => scrollToSection("portfolio")}
             >
               View Our Work
-            </Button>
-          </div> */}
+            </Button>  
+          </div>*/}
         </div>
       </div>
     </section>
