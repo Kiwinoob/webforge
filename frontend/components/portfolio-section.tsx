@@ -1,27 +1,28 @@
-"use client"
+"use client";
 
-import Image from "next/image"
-import Link from "next/link"
-import { ExternalLink } from "lucide-react"
-import { Button } from "@/components/ui/button"
+import Image from "next/image";
+import Link from "next/link";
+import { ExternalLink } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 // Define the type for portfolio items
 type PortfolioItem = {
-  id: string
-  title: string
-  description: string
-  client: string
-  category: string
-  imageUrl: string
-  projectUrl: string
-}
+  id: string;
+  title: string;
+  description: string;
+  client: string;
+  category: string;
+  imageUrl: string;
+  projectUrl: string;
+};
 
 // Sample portfolio data
 const portfolioItems: PortfolioItem[] = [
   {
     id: "1",
     title: "Modern E-commerce Platform",
-    description: "A fully responsive e-commerce website with product filtering and secure checkout.",
+    description:
+      "A fully responsive e-commerce website with product filtering and secure checkout.",
     client: "FashionHub",
     category: "E-commerce",
     imageUrl: "/placeholder.svg?height=400&width=600",
@@ -30,7 +31,8 @@ const portfolioItems: PortfolioItem[] = [
   {
     id: "2",
     title: "Corporate Business Site",
-    description: "Professional website with service listings, team profiles, and contact integration.",
+    description:
+      "Professional website with service listings, team profiles, and contact integration.",
     client: "TechCorp Inc.",
     category: "Business",
     imageUrl: "/placeholder.svg?height=400&width=600",
@@ -39,7 +41,8 @@ const portfolioItems: PortfolioItem[] = [
   {
     id: "3",
     title: "Restaurant Ordering System",
-    description: "Online menu and ordering system with reservation capabilities.",
+    description:
+      "Online menu and ordering system with reservation capabilities.",
     client: "Gourmet Bistro",
     category: "Food & Beverage",
     imageUrl: "/placeholder.svg?height=400&width=600",
@@ -48,7 +51,8 @@ const portfolioItems: PortfolioItem[] = [
   {
     id: "4",
     title: "Photography Portfolio",
-    description: "Elegant portfolio site with image galleries and booking functionality.",
+    description:
+      "Elegant portfolio site with image galleries and booking functionality.",
     client: "Lens Masters",
     category: "Portfolio",
     imageUrl: "/placeholder.svg?height=400&width=600",
@@ -57,7 +61,8 @@ const portfolioItems: PortfolioItem[] = [
   {
     id: "5",
     title: "Real Estate Listings",
-    description: "Property listing website with advanced search and filtering options.",
+    description:
+      "Property listing website with advanced search and filtering options.",
     client: "Prime Properties",
     category: "Real Estate",
     imageUrl: "/placeholder.svg?height=400&width=600",
@@ -66,13 +71,14 @@ const portfolioItems: PortfolioItem[] = [
   {
     id: "6",
     title: "Fitness Studio Platform",
-    description: "Class scheduling, membership management, and online payment system.",
+    description:
+      "Class scheduling, membership management, and online payment system.",
     client: "FitLife Studio",
     category: "Health & Fitness",
     imageUrl: "/placeholder.svg?height=400&width=600",
     projectUrl: "#",
   },
-]
+];
 
 // Portfolio item card component
 function PortfolioCard({ item }: { item: PortfolioItem }) {
@@ -89,8 +95,12 @@ function PortfolioCard({ item }: { item: PortfolioItem }) {
       </div>
       <div className="p-4">
         <div className="flex items-center justify-between">
-          <span className="inline-block rounded-full bg-muted px-2 py-1 text-xs font-medium">{item.category}</span>
-          <span className="text-sm text-muted-foreground">Client: {item.client}</span>
+          <span className="inline-block rounded-full bg-muted px-2 py-1 text-xs font-medium">
+            {item.category}
+          </span>
+          <span className="text-sm text-muted-foreground">
+            Client: {item.client}
+          </span>
         </div>
         <h3 className="mt-2 text-xl font-bold">{item.title}</h3>
         <p className="mt-1 text-sm text-muted-foreground">{item.description}</p>
@@ -104,7 +114,7 @@ function PortfolioCard({ item }: { item: PortfolioItem }) {
         </div>
       </div>
     </div>
-  )
+  );
 }
 
 // Filter buttons for portfolio categories
@@ -113,9 +123,9 @@ function CategoryFilters({
   activeCategory,
   onCategoryChange,
 }: {
-  categories: string[]
-  activeCategory: string
-  onCategoryChange: (category: string) => void
+  categories: string[];
+  activeCategory: string;
+  onCategoryChange: (category: string) => void;
 }) {
   return (
     <div className="flex flex-wrap justify-center gap-2 py-6">
@@ -137,34 +147,43 @@ function CategoryFilters({
         </Button>
       ))}
     </div>
-  )
+  );
 }
 
 export function PortfolioSection() {
   // In a real application, you would use React state here
   // For simplicity in this example, we're showing all items
-  const activeCategory = "All"
+  const activeCategory = "All";
 
   // Extract unique categories from portfolio items
-  const categories = Array.from(new Set(portfolioItems.map((item) => item.category)))
+  const categories = Array.from(
+    new Set(portfolioItems.map((item) => item.category))
+  );
 
   // Filter items based on active category
   const filteredItems =
-    activeCategory === "All" ? portfolioItems : portfolioItems.filter((item) => item.category === activeCategory)
+    activeCategory === "All"
+      ? portfolioItems
+      : portfolioItems.filter((item) => item.category === activeCategory);
 
   return (
-    <section id="portfolio" className="w-full py-12 md:py-24 lg:py-32">
+    <section
+      id="portfolio"
+      className="w-full py-12 md:py-12 lg:py-32 bg-webforge-background"
+    >
       <div className="container px-4 md:px-6">
-        <div className="flex flex-col items-center justify-center space-y-4 text-center">
-          <div className="space-y-2">
-            <div className="inline-block rounded-lg bg-primary px-3 py-1 text-sm text-primary-foreground">
+        {/* Header */}
+        <div className="mx-auto max-w-3xl text-center mb-16">
+          <h2 className="text-3xl font-bold tracking-tighter text-webforge-dark sm:text-4xl">
+            Our{" "}
+            <span className="bg-gradient-to-r from-webforge-accent to-amber-600 text-transparent bg-clip-text font-bold">
               Portfolio
-            </div>
-            <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl">Our Recent Projects</h2>
-            <p className="max-w-[900px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-              Browse through our collection of successful website projects we've delivered for our clients.
-            </p>
-          </div>
+            </span>
+          </h2>
+          <p className="mt-4 text-webforge-dark/80 md:text-xl">
+            Browse through our collection of successful website projects we've
+            delivered for our clients.
+          </p>
         </div>
 
         <CategoryFilters
@@ -184,5 +203,5 @@ export function PortfolioSection() {
         </div>
       </div>
     </section>
-  )
+  );
 }
