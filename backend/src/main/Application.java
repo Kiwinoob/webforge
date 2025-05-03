@@ -8,4 +8,10 @@ public class Application {
   public static void main(String[] args) {
     SpringApplication.run(Application.class, args);
   }
+  // @SpringBootTest(classes = CRUDRunner.class)
+// class DemoApplicationTests {
+
+// 	@Test
+// 	void contextLoads() {
+// 	}
 }

@@ -1,0 +1,50 @@
+# -----------------------
+# Java & Spring Boot
+# -----------------------
+/target/
+*.log
+*.class
+*.jar
+*.war
+*.iml
+
+# -----------------------
+# Environment & Secrets
+# -----------------------
+.env
+.env.*
+application.properties
+application.yml
+src/main/resources/application*.properties
+src/main/resources/application*.yml
+
+# -----------------------
+# OS Generated
+# -----------------------
+.DS_Store
+Thumbs.db
+
+# -----------------------
+# IDEs
+# -----------------------
+
+# IntelliJ
+.idea/
+*.iws
+*.ipr
+*.iml
+
+# Eclipse
+.project
+.classpath
+.settings/
+
+# VS Code
+.vscode/
+
+# -----------------------
+# Test Reports
+# -----------------------
+/surefire-reports/
+/test-output/
+/jacoco.exec

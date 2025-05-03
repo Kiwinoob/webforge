@@ -24,19 +24,19 @@ export function ServicesSection() {
         "Clean, efficient code that loads quickly",
       ],
     },
-    {
-      id: "ecommerce-solutions",
-      title: "E-commerce Solutions",
-      description:
-        "Online stores that make selling products easy and profitable.",
-      icon: <ShoppingCart className="h-6 w-6" />,
-      benefits: [
-        "Intuitive product browsing and filtering",
-        "Streamlined checkout process to reduce cart abandonment",
-        "Integrated payment gateways for secure transactions",
-        "Inventory management and order tracking",
-      ],
-    },
+    // {
+    //   id: "ecommerce-solutions",
+    //   title: "E-commerce Solutions",
+    //   description:
+    //     "Online stores that make selling products easy and profitable.",
+    //   icon: <ShoppingCart className="h-6 w-6" />,
+    //   benefits: [
+    //     "Intuitive product browsing and filtering",
+    //     "Streamlined checkout process to reduce cart abandonment",
+    //     "Integrated payment gateways for secure transactions",
+    //     "Inventory management and order tracking",
+    //   ],
+    // },
     {
       id: "seo-optimization",
       title: "SEO & Performance",
@@ -49,43 +49,43 @@ export function ServicesSection() {
         "Reduced bounce rates and higher engagement",
       ],
     },
-    {
-      id: "website-maintenance",
-      title: "Website Maintenance",
-      description:
-        "Keep your website secure, up-to-date, and performing at its best.",
-      icon: <Settings className="h-6 w-6" />,
-      benefits: [
-        "Regular updates to ensure security and compatibility",
-        "Backup management to protect your data",
-        "Performance monitoring and optimization",
-        "Technical support when you need it",
-      ],
-    },
-    {
-      id: "digital-marketing",
-      title: "Digital Marketing",
-      description: "Attract more visitors and convert them into customers.",
-      icon: <Globe className="h-6 w-6" />,
-      benefits: [
-        "Strategic social media management",
-        "Email marketing campaigns",
-        "Content creation and marketing",
-        "Analytics and reporting",
-      ],
-    },
-    {
-      id: "custom-web-apps",
-      title: "Custom Web Applications",
-      description: "Tailored solutions to solve specific business challenges.",
-      icon: <Layers className="h-6 w-6" />,
-      benefits: [
-        "Streamlined business processes and workflows",
-        "Reduced manual work and human error",
-        "Improved efficiency and productivity",
-        "Custom solutions for unique business needs",
-      ],
-    },
+    // {
+    //   id: "website-maintenance",
+    //   title: "Website Maintenance",
+    //   description:
+    //     "Keep your website secure, up-to-date, and performing at its best.",
+    //   icon: <Settings className="h-6 w-6" />,
+    //   benefits: [
+    //     "Regular updates to ensure security and compatibility",
+    //     "Backup management to protect your data",
+    //     "Performance monitoring and optimization",
+    //     "Technical support when you need it",
+    //   ],
+    // },
+    // {
+    //   id: "digital-marketing",
+    //   title: "Digital Marketing",
+    //   description: "Attract more visitors and convert them into customers.",
+    //   icon: <Globe className="h-6 w-6" />,
+    //   benefits: [
+    //     "Strategic social media management",
+    //     "Email marketing campaigns",
+    //     "Content creation and marketing",
+    //     "Analytics and reporting",
+    //   ],
+    // },
+    // {
+    //   id: "custom-web-apps",
+    //   title: "Custom Web Applications",
+    //   description: "Tailored solutions to solve specific business challenges.",
+    //   icon: <Layers className="h-6 w-6" />,
+    //   benefits: [
+    //     "Streamlined business processes and workflows",
+    //     "Reduced manual work and human error",
+    //     "Improved efficiency and productivity",
+    //     "Custom solutions for unique business needs",
+    //   ],
+    // },
   ];
 
   return (
@@ -97,7 +97,10 @@ export function ServicesSection() {
         {/* Header */}
         <div className="mx-auto max-w-3xl text-center mb-12">
           <h3 className="text-3xl font-bold tracking-tighter text-webforge-dark">
-            Our <span className="text-webforge-accent">Services</span>
+            Our{" "}
+            <span className="bg-gradient-to-r from-webforge-accent to-amber-600 text-transparent bg-clip-text font-bold">
+              Services
+            </span>
           </h3>
           <p className="mt-4 text-webforge-dark/80 md:text-lg">
             We offer a comprehensive range of web services to help your business

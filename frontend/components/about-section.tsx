@@ -10,7 +10,10 @@ export function AboutSection() {
         {/* Header */}
         <div className="mx-auto max-w-3xl text-center mb-16">
           <h2 className="text-3xl font-bold tracking-tighter text-webforge-dark sm:text-4xl">
-            About <span className="text-webforge-accent">WebForge</span>
+            About{" "}
+            <span className="bg-gradient-to-r from-webforge-accent to-amber-600 text-transparent bg-clip-text font-bold">
+              WebForge
+            </span>
           </h2>
           <p className="mt-4 text-webforge-dark/80 md:text-xl">
             Learn about our mission, and how we help businesses succeed online.
@@ -53,7 +56,10 @@ export function AboutSection() {
         <div className="mb-16">
           <div className="mx-auto max-w-3xl text-center mb-12">
             <h3 className="text-3xl font-bold tracking-tighter text-webforge-dark">
-              Our <span className="text-webforge-accent">Approach</span>
+              Our{" "}
+              <span className="bg-gradient-to-r from-webforge-accent to-amber-600 text-transparent bg-clip-text font-bold">
+                Approach
+              </span>
             </h3>
             <p className="mt-4 text-webforge-dark/80 md:text-lg">
               We believe in a collaborative, transparent process that puts your
