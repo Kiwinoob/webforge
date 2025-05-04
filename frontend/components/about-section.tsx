@@ -21,7 +21,7 @@ export function AboutSection() {
         </div>
 
         {/* Our Story */}
-        <div className="grid gap-4 sm:gap-6 md:gap-8 grid-cols-[1fr_auto] sm:grid-cols-[2fr_1fr] items-center mb-20">
+        <div className="grid gap-8 lg:grid-cols-[2fr_1fr] items-center mb-20">
           <div className="space-y-6">
             <h3 className="text-2xl font-bold tracking-tighter text-webforge-dark">
               Our Story
@@ -41,7 +41,7 @@ export function AboutSection() {
               businesses.
             </p>
           </div>
-          <div className="flex justify-end">
+          <div className="flex justify-center lg:justify-end">
             <Image
               src="/WebForgeLogoBlack.png"
               alt="WebForge Logo"

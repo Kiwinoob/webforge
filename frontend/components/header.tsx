@@ -11,10 +11,8 @@ export function Header() {
   const navItems = [
     { label: "About", href: "#about", sectionId: "about" },
     { label: "Approach", href: "#approach", sectionId: "approach" },
-    // { label: "Services", href: "#services", sectionId: "services" },
     { label: "Portfolio", href: "#portfolio", sectionId: "portfolio" },
-    // { label: "Testimonials", href: "#testimonials", sectionId: "testimonials" },
-    // { label: "FAQ", href: "#faq", sectionId: "faq" },
+    //{ label: "Contact Us", href: "#contact", sectionId: "contact" },
   ];
 
   // Handle smooth scrolling for anchor links
@@ -95,11 +93,6 @@ export function Header() {
         </div>
         <div className="flex flex-1 items-center justify-end space-x-4">
           <nav className="flex items-center space-x-2">
-            <a href="#quote">
-              {/* <Button size="sm" onClick={(e) => scrollToSection(e, "quote")}>
-                Get a Quote
-              </Button> */}
-            </a>
             <Button
               variant="ghost"
               size="icon"
@@ -129,13 +122,6 @@ export function Header() {
                   {item.label}
                 </a>
               ))}
-              <a
-                href="#quote"
-                className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
-                onClick={(e) => scrollToSection(e, "quote")}
-              >
-                Get a Quote
-              </a>
             </nav>
           </div>
         </div>
