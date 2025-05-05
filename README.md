@@ -16,6 +16,9 @@ Our team combines technical expertise with **creative vision**, ensuring each pr
 4. npm run dev
 
 # Version History
+Version 1.7
+- Fixed missing header on Our Approach
+
 Version 1.6
 - Added README.md
 
