@@ -36,11 +36,7 @@ export function Header() {
   // Update active section based on scroll position
   useEffect(() => {
     const handleScroll = () => {
-      const sections = [
-        "home",
-        ...navItems.map((item) => item.sectionId),
-        "quote",
-      ];
+      const sections = ["home", ...navItems.map((item) => item.sectionId)];
 
       const currentSection = sections.find((section) => {
         const element = document.getElementById(section);

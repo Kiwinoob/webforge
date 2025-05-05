@@ -4,7 +4,7 @@ export function AboutSection() {
   return (
     <section
       id="about"
-      className="w-full py-12 md:py-12 lg:py-32 bg-webforge-background"
+      className="w-full py-8 md:py-16 lg:py-20 bg-webforge-background"
     >
       <div className="container px-4 md:px-6">
         {/* Header */}
@@ -47,7 +47,7 @@ export function AboutSection() {
               alt="WebForge Logo"
               width={400}
               height={400}
-              className="h-auto w-auto max-w-[180px] sm:max-w-[250px] md:max-w-[320px] lg:max-w-[400px]"
+              className="h-auto w-auto max-w-[400px] "
             />
           </div>
         </div>

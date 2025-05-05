@@ -4,7 +4,7 @@ export function ApproachSection() {
   return (
     <section
       id="approach"
-      className="w-full py-12 md:py-24 lg:py-32 bg-webforge-background"
+      className="w-full py-8 md:py-16 lg:py-20 bg-webforge-background"
     >
       <div className="container px-4 md:px-6 ">
         <div className="mx-auto max-w-3xl text-center mb-16">
