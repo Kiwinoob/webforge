@@ -62,7 +62,7 @@ export function PortfolioSection() {
                 <p className="text-webforge-dark/80 mb-6">{item.description}</p>
                 <div className="flex justify-end">
                   <Link href={item.projectUrl}>
-                    <Button className="bg-webforge-accent hover:bg-webforge-accent/90 text-white">
+                    <Button className="bg-gradient-to-r from-webforge-accent to-orange-500 hover:from-webforge-accent/90 hover:to-orange-600 text-white">
                       Visit
                     </Button>
                   </Link>

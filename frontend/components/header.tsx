@@ -12,7 +12,7 @@ export function Header() {
     { label: "About", href: "#about", sectionId: "about" },
     { label: "Approach", href: "#approach", sectionId: "approach" },
     { label: "Portfolio", href: "#portfolio", sectionId: "portfolio" },
-    //{ label: "Contact Us", href: "#contact", sectionId: "contact" },
+    { label: "Contact Us", href: "#contact", sectionId: "contact" },
   ];
 
   // Handle smooth scrolling for anchor links
