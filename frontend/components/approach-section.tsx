@@ -1,4 +1,5 @@
 import Image from "next/image";
+import FadeInUp from './fade-in-up';
 
 export function ApproachSection() {
   return (
@@ -6,7 +7,7 @@ export function ApproachSection() {
       id="approach"
       className="w-full py-8 md:py-16 lg:py-20 bg-webforge-background"
     >
-      <div className="container px-4 md:px-6 ">
+      <FadeInUp className="container px-4 md:px-6 ">
         <div className="mx-auto max-w-3xl text-center mb-16">
           <h3 className="text-3xl font-bold tracking-tighter text-webforge-dark sm:text-4xl">
             Our{" "}
@@ -93,7 +94,7 @@ export function ApproachSection() {
             </p>
           </div>
         </div>
-      </div>
+      </FadeInUp>
     </section>
   );
 }

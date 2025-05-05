@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import FadeInUp from './fade-in-up';
 
 // Define the type for portfolio items
 type PortfolioItem = {
@@ -30,7 +31,7 @@ export function PortfolioSection() {
       id="portfolio"
       className="w-full py-8 md:py-16 lg:py-20 bg-webforge-background"
     >
-      <div className="container px-4 md:px-6">
+      <FadeInUp className="container px-4 md:px-6">
         <div className="mx-auto max-w-3xl text-center mb-16">
           <h3 className="text-3xl font-bold tracking-tighter text-webforge-dark sm:text-4xl">
             Our{" "}
@@ -71,7 +72,7 @@ export function PortfolioSection() {
             </div>
           ))}
         </div>
-      </div>
+      </FadeInUp>
     </section>
   );
 }

@@ -16,6 +16,17 @@ Our team combines technical expertise with **creative vision**, ensuring each pr
 4. npm run dev
 
 # Version History
+Version 1.9
+- Added fade-in-up animation component
+- Applied fade-in-up animation on AboutSection, ApproachSection, Contact-Section and PortfolioSection
+
+Version 1.8
+- Fixed text not showing
+- Fixed padding for each padding
+
+Version 1.8
+- Updated ContactUs design
+
 Version 1.7
 - Fixed missing header on Our Approach
 

@@ -1,4 +1,5 @@
 import Image from "next/image";
+import FadeInUp from './fade-in-up';
 
 export function AboutSection() {
   return (
@@ -6,7 +7,7 @@ export function AboutSection() {
       id="about"
       className="w-full py-8 md:py-16 lg:py-20 bg-webforge-background"
     >
-      <div className="container px-4 md:px-6">
+      <FadeInUp className="container px-4 md:px-6">
         {/* Header */}
         <div className="mx-auto max-w-3xl text-center mb-16">
           <h2 className="text-3xl font-bold tracking-tighter text-webforge-dark sm:text-4xl">
@@ -51,7 +52,7 @@ export function AboutSection() {
             />
           </div>
         </div>
-      </div>
+      </FadeInUp>
     </section>
   );
 }
