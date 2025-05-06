@@ -64,24 +64,21 @@ export function Header() {
 
   return (
     <header
-  className={`fixed top-0 z-50 w-full transition-colors duration-500 ${
-    scrolled
-      ? "bg-white"
-      : "bg-transparent"
-  }`}
->
-
+      className={`fixed top-0 z-50 w-full transition-colors duration-500 ${
+        scrolled ? "bg-white" : "bg-transparent"
+      }`}
+    >
       <div className="flex h-24 items-center justify-between w-full px-0">
         {/* Left: Logo */}
         <a
           href="/"
-          className="flex items-center space-x-2"
+          className="flex items-center space-x-2 "
           onClick={(e) => scrollToSection(e, "/")}
         >
           <img
             src={scrolled ? WebForgeLogoBlack.src : WebForgeLogoWhite.src}
             alt="WebForge Logo"
-            className="h-64 w-auto"
+            className="h-48 w-auto md:h-48 lg:h-64"
             style={{ display: "block" }}
           />
         </a>
@@ -90,21 +87,19 @@ export function Header() {
         <nav className="hidden md:flex gap-8 ml-auto mr-12">
           {navItems.map((item) => (
             <a
-            key={item.sectionId}
-            href={item.href}
-            onClick={(e) => scrollToSection(e, item.sectionId)}
-            className={`flex items-center text-sm font-medium transition-colors ${
-              activeSection === item.sectionId
-                ? "text-orange-500" // Orange for active item (both states)
-                : scrolled
-                  ? "text-muted-foreground"  // Gray when scrolled
-                  : "text-white/80"          // Semi-transparent white when transparent
-            } hover:text-orange-500`}
-            
-          >
-            {item.label}
-          </a>
-          
+              key={item.sectionId}
+              href={item.href}
+              onClick={(e) => scrollToSection(e, item.sectionId)}
+              className={`flex items-center text-sm font-medium transition-colors ${
+                activeSection === item.sectionId
+                  ? "text-orange-500" // Orange for active item (both states)
+                  : scrolled
+                  ? "text-muted-foreground" // Gray when scrolled
+                  : "text-white/80" // Semi-transparent white when transparent
+              } hover:text-orange-500`}
+            >
+              {item.label}
+            </a>
           ))}
         </nav>
 
@@ -113,7 +108,9 @@ export function Header() {
           <Button
             variant="ghost"
             size="icon"
-            className="md:hidden"
+            className={`md:hidden mr-4 [&_svg]:size-6 ${
+              !scrolled ? "text-white" : "text-foreground"
+            }`}
             onClick={() => setIsMenuOpen(!isMenuOpen)}
           >
             {isMenuOpen ? (
@@ -131,21 +128,19 @@ export function Header() {
             <nav className="flex flex-col space-y-4">
               {navItems.map((item) => (
                 <a
-                key={item.sectionId}
-                href={item.href}
-                onClick={(e) => scrollToSection(e, item.sectionId)}
-                className={`flex items-center text-sm font-medium transition-colors ${
-                  activeSection === item.sectionId
-                    ? "text-orange-500" // Orange for active item (both states)
-                    : scrolled
-                      ? "text-muted-foreground"  // Gray when scrolled
-                      : "text-white/80"          // Semi-transparent white when transparent
-                } hover:text-orange-500`}
-                
-              >
-                {item.label}
-              </a>
-              
+                  key={item.sectionId}
+                  href={item.href}
+                  onClick={(e) => scrollToSection(e, item.sectionId)}
+                  className={`flex items-center text-sm font-medium transition-colors ${
+                    activeSection === item.sectionId
+                      ? "text-orange-500" // Orange for active item (both states)
+                      : scrolled
+                      ? "text-muted-foreground" // Gray when scrolled
+                      : "text-white/80" // Semi-transparent white when transparent
+                  } hover:text-orange-500`}
+                >
+                  {item.label}
+                </a>
               ))}
             </nav>
           </div>
