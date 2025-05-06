@@ -68,10 +68,6 @@ export function Header() {
         scrolled ? "bg-white" : "bg-transparent"
       }`}
     >
-      className={`fixed top-0 z-50 w-full transition-colors duration-500 ${
-        scrolled ? "bg-white" : "bg-transparent"
-      }`}
-    >
       <div className="flex h-24 items-center justify-between w-full px-0">
         {/* Left: Logo */}
         <a
