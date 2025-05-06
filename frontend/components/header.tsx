@@ -9,7 +9,7 @@ import WebForgeLogoWhite from "@/public/WebForgeLogoWhite.png";
 
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [activeSection, setActiveSection] = useState("home");
+  const [activeSection, setActiveSection] = useState("/");
   const [scrolled, setScrolled] = useState(false);
 
   const navItems = [
@@ -64,6 +64,10 @@ export function Header() {
 
   return (
     <header
+      className={`fixed top-0 z-50 w-full transition-colors duration-500 ${
+        scrolled ? "bg-white" : "bg-transparent"
+      }`}
+    >
       className={`fixed top-0 z-50 w-full transition-colors duration-500 ${
         scrolled ? "bg-white" : "bg-transparent"
       }`}
