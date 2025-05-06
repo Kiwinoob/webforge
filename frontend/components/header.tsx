@@ -79,7 +79,7 @@ export function Header() {
             src={scrolled ? WebForgeLogoBlack.src : WebForgeLogoWhite.src}
             alt="WebForge Logo"
             className="h-48 w-auto md:h-48 lg:h-64"
-            style={{ display: "block" }}
+            style={{ display: "block"}}
           />
         </a>
 
