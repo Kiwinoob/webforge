@@ -16,6 +16,10 @@ Our team combines technical expertise with **creative vision**, ensuring each pr
 4. npm run dev
 
 # Version History
+Version 2.1
+- added email js and recaptcha
+- added simple form validation
+
 Version 2.0
 - Added Navbar Transparency
 - Added Nav Item Colours
