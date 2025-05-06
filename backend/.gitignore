@@ -17,6 +17,8 @@ application.properties
 application.yml
 src/main/resources/application*.properties
 src/main/resources/application*.yml
+firebase-service-account.json
+**/firebase-service-account.json
 
 # -----------------------
 # OS Generated
