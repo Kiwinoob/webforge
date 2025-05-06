@@ -1,16 +1,54 @@
 "use client";
 
 import type React from "react";
-import { useState } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
-import FadeInUp from './fade-in-up';
+import FadeInUp from "./fade-in-up";
+import emailjs from "@emailjs/browser";
+import { useReCaptcha } from "next-recaptcha-v3";
 
 export function ContactSection() {
+  const { executeRecaptcha } = useReCaptcha();
+  const [token, setToken] = useState<string | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<"success" | "error" | null>(
+    null
+  );
+
+  const siteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
+  const emailJsServiceId = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID;
+  const emailJsTemplateId = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID;
+  const emailJsPublicKey = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY;
+
+  useEffect(() => {
+    if (emailJsPublicKey) {
+      emailjs.init(emailJsPublicKey);
+    } else {
+      console.error(
+        "EmailJS Public Key is not defined. Please check your .env.local file."
+      );
+    }
+    if (!siteKey) {
+      console.error(
+        "reCAPTCHA Site Key is not defined. Please check your .env.local file."
+      );
+    }
+  }, [emailJsPublicKey, siteKey]);
+
+  const handleReCaptchaVerify = useCallback(async () => {
+    if (!executeRecaptcha) {
+      console.log("Execute recaptcha not yet available");
+      return null;
+    }
+    const result = await executeRecaptcha("contact_form");
+    setToken(result);
+    return result;
+  }, [executeRecaptcha]);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
-    enquiryType: "Get a Quote",
+    enquiryType: "",
     currentWebsite: "",
     projectDescription: "",
     consent: false,
@@ -29,21 +67,97 @@ export function ContactSection() {
     setFormData((prev) => ({ ...prev, consent: checked }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const [errors, setErrors] = useState<Record<string, string>>({});
+
+  const validateForm = () => {
+    const newErrors: Record<string, string> = {};
+
+    if (!formData.name.trim()) {
+      newErrors.name = "Name is required";
+    }
+
+    if (!formData.email.trim()) {
+      newErrors.email = "Email is required";
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+      newErrors.email = "Please enter a valid email address";
+    }
+
+    if (!formData.enquiryType) {
+      newErrors.enquiryType = "Please select an enquiry type";
+    }
+
+    if (!formData.projectDescription.trim()) {
+      newErrors.projectDescription = "Project description is required";
+    }
+
+    if (!formData.consent) {
+      newErrors.consent = "You must agree to the terms";
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // In a real application, you would send the form data to your server
-    console.log("Form submitted:", formData);
-    // Reset form
-    setFormData({
-      name: "",
-      email: "",
-      enquiryType: "Get a Quote",
-      currentWebsite: "",
-      projectDescription: "",
-      consent: false,
-    });
-    // Show success message
-    alert("Thank you for your message. We'll get back to you soon!");
+    setSubmitStatus(null);
+
+    if (!validateForm()) {
+      return;
+    }
+
+    if (
+      !siteKey ||
+      !emailJsServiceId ||
+      !emailJsTemplateId ||
+      !emailJsPublicKey
+    ) {
+      console.error(
+        "One or more environment variables are not set for EmailJS or reCAPTCHA."
+      );
+      alert("Configuration error. Please contact support.");
+      return;
+    }
+
+    setIsSubmitting(true);
+
+    const recaptchaToken = await handleReCaptchaVerify();
+
+    if (!recaptchaToken) {
+      setErrors((prev) => ({
+        ...prev,
+        recaptcha: "reCAPTCHA verification failed. Please try again.",
+      }));
+      setIsSubmitting(false);
+      return;
+    }
+
+    const templateParams = {
+      ...formData,
+      "g-recaptcha-response": recaptchaToken,
+    };
+
+    try {
+      await emailjs.send(emailJsServiceId, emailJsTemplateId, templateParams);
+      console.log("Form submitted successfully:", formData);
+      setFormData({
+        name: "",
+        email: "",
+        enquiryType: "Get a Quote",
+        currentWebsite: "",
+        projectDescription: "",
+        consent: false,
+      });
+      setErrors({});
+      setSubmitStatus("success");
+      alert("Thank you for your message. We'll get back to you soon!");
+    } catch (error) {
+      console.error("Failed to send email:", error);
+      setSubmitStatus("error");
+      alert("Failed to send message. Please try again later.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -71,9 +185,14 @@ export function ContactSection() {
               name="name"
               value={formData.name}
               onChange={handleChange}
-              className="w-full h-10 px-3 border border-gray-300 rounded"
+              className={`w-full h-10 px-3 border ${
+                errors.name ? "border-red-500" : "border-gray-300"
+              } rounded`}
               required
             />
+            {errors.name && (
+              <span className="text-red-500 text-xs">{errors.name}</span>
+            )}
           </div>
 
           <div className="space-y-2">
@@ -86,9 +205,14 @@ export function ContactSection() {
               type="email"
               value={formData.email}
               onChange={handleChange}
-              className="w-full h-10 px-3 border border-gray-300 rounded"
+              className={`w-full h-10 px-3 border ${
+                errors.email ? "border-red-500" : "border-gray-300"
+              } rounded`}
               required
             />
+            {errors.email && (
+              <span className="text-red-500 text-xs">{errors.email}</span>
+            )}
           </div>
 
           <div className="space-y-2">
@@ -101,7 +225,9 @@ export function ContactSection() {
                 name="enquiryType"
                 value={formData.enquiryType}
                 onChange={handleChange}
-                className="w-full h-10 px-3 border border-gray-300 rounded appearance-none pr-10"
+                className={`w-full h-10 px-3 border ${
+                  errors.enquiryType ? "border-red-500" : "border-gray-300"
+                } rounded appearance-none pr-10`}
                 required
               >
                 <option value="General">General</option>
@@ -153,9 +279,16 @@ export function ContactSection() {
               name="projectDescription"
               value={formData.projectDescription}
               onChange={handleChange}
-              className="w-full h-32 px-3 py-2 border border-gray-300 rounded"
+              className={`w-full h-32 px-3 py-2 border ${
+                errors.projectDescription ? "border-red-500" : "border-gray-300"
+              } rounded`}
               required
             ></textarea>
+            {errors.projectDescription && (
+              <span className="text-red-500 text-xs">
+                {errors.projectDescription}
+              </span>
+            )}
           </div>
 
           <div className="flex items-start space-x-2">
@@ -173,19 +306,42 @@ export function ContactSection() {
           </div>
 
           <div className="flex justify-center">
-            <div className="g-recaptcha" data-sitekey="your-recaptcha-site-key">
-              {/* This is a placeholder for the reCAPTCHA. In a real implementation, you would need to include the reCAPTCHA script */}
+            {siteKey ? (
+              <div
+                className="g-recaptcha"
+                data-sitekey={siteKey}
+                data-callback={setToken}
+                data-action="contact_form"
+              ></div>
+            ) : (
               <div className="border border-gray-300 rounded p-2 text-xs text-gray-500 flex items-center justify-center h-[78px] w-[300px]">
-                reCAPTCHA placeholder
+                reCAPTCHA not configured
               </div>
-            </div>
+            )}
+            {errors.recaptcha && (
+              <span className="text-red-500 text-xs mt-1">
+                {errors.recaptcha}
+              </span>
+            )}
           </div>
+
+          {submitStatus === "success" && (
+            <p className="text-green-600 text-center">
+              Your message has been sent successfully!
+            </p>
+          )}
+          {submitStatus === "error" && (
+            <p className="text-red-500 text-center">
+              Failed to send message. Please try again.
+            </p>
+          )}
 
           <Button
             type="submit"
-            className="w-full h-12 bg-gradient-to-r from-webforge-accent to-orange-500 hover:from-webforge-accent/90 hover:to-orange-600 text-white"
+            disabled={isSubmitting || !token}
+            className="w-full h-12 bg-gradient-to-r from-webforge-accent to-orange-500 hover:from-webforge-accent/90 hover:to-orange-600 text-white disabled:opacity-50"
           >
-            Send
+            {isSubmitting ? "Sending..." : "Send"}
           </Button>
         </form>
       </FadeInUp>
