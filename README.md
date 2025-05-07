@@ -20,12 +20,14 @@ Version 2.1.1
 - Testing EmailJS & reCAPTCHA
 
 Version 2.1
-- added email js and recaptcha
-- added simple form validation
+- Added email js and recaptcha
+- Added simple form validation
 
 Version 2.0
 - Added Navbar Transparency
 - Added Nav Item Colours
+- Backend Setup: Maven, Spring Boot, Firebase
+- Update Backend folder structure
 
 Version 1.9
 - Added fade-in-up animation component
