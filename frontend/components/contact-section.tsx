@@ -10,7 +10,6 @@ import { useReCaptcha } from "next-recaptcha-v3";
 
 export function ContactSection() {
   const { executeRecaptcha } = useReCaptcha();
-  const [token, setToken] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<"success" | "error" | null>(
     null
@@ -37,13 +36,16 @@ export function ContactSection() {
   }, [emailJsPublicKey, siteKey]);
 
   const handleReCaptchaVerify = useCallback(async () => {
-    if (!executeRecaptcha) {
-      console.log("Execute recaptcha not yet available");
+    try {
+      if (!executeRecaptcha) {
+        console.error("reCAPTCHA verification not available");
+        return null;
+      }
+      return await executeRecaptcha("contact_form");
+    } catch (error) {
+      console.error("reCAPTCHA verification failed:", error);
       return null;
     }
-    const result = await executeRecaptcha("contact_form");
-    setToken(result);
-    return result;
   }, [executeRecaptcha]);
   const [formData, setFormData] = useState({
     name: "",
@@ -299,9 +301,9 @@ export function ContactSection() {
               className="mt-1"
             />
             <label htmlFor="consent" className="text-xs text-gray-600">
-              By checking this box, you consent to the processing and sharing of
-              your personal data for the purpose of addressing your specified
-              queries *
+              * By checking this box, you consent to the processing and sharing
+              of your personal data for the purpose of addressing your specified
+              queries
             </label>
           </div>
 

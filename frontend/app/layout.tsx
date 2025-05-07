@@ -2,6 +2,7 @@ import type React from "react";
 import "@/app/globals.css";
 import { Inter } from "next/font/google";
 import { ThemeProvider } from "@/components/theme-provider";
+import { ReCaptchaProvider } from "next-recaptcha-v3";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -25,7 +26,11 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          {children}
+          <ReCaptchaProvider
+            reCaptchaKey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY ?? ""}
+          >
+            {children}
+          </ReCaptchaProvider>
         </ThemeProvider>
       </body>
     </html>
