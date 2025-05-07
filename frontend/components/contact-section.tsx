@@ -264,7 +264,6 @@ export function ContactSection() {
               <input
                 id="currentWebsite"
                 name="currentWebsite"
-                type="url"
                 value={formData.currentWebsite}
                 onChange={handleChange}
                 className="w-full h-10 px-3 border border-gray-300 rounded"
