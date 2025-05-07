@@ -305,25 +305,13 @@ export function ContactSection() {
             </label>
           </div>
 
-          <div className="flex justify-center">
-            {siteKey ? (
-              <div
-                className="g-recaptcha"
-                data-sitekey={siteKey}
-                data-callback={setToken}
-                data-action="contact_form"
-              ></div>
-            ) : (
-              <div className="border border-gray-300 rounded p-2 text-xs text-gray-500 flex items-center justify-center h-[78px] w-[300px]">
-                reCAPTCHA not configured
-              </div>
-            )}
-            {errors.recaptcha && (
-              <span className="text-red-500 text-xs mt-1">
+          {errors.recaptcha && (
+            <div className="text-center">
+              <span className="text-red-500 text-xs">
                 {errors.recaptcha}
               </span>
-            )}
-          </div>
+            </div>
+          )}
 
           {submitStatus === "success" && (
             <p className="text-green-600 text-center">
