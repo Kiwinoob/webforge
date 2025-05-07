@@ -178,7 +178,7 @@ export function ContactSection() {
         <form onSubmit={handleSubmit} className="space-y-6">
           <div className="space-y-2">
             <label htmlFor="name" className="text-sm">
-              Name
+              Name *
             </label>
             <input
               id="name"
@@ -197,7 +197,7 @@ export function ContactSection() {
 
           <div className="space-y-2">
             <label htmlFor="email" className="text-sm">
-              Email
+              Email *
             </label>
             <input
               id="email"
@@ -217,7 +217,7 @@ export function ContactSection() {
 
           <div className="space-y-2">
             <label htmlFor="enquiryType" className="text-sm">
-              Enquiry Type
+              Enquiry Type *
             </label>
             <div className="relative">
               <select
@@ -272,7 +272,7 @@ export function ContactSection() {
 
           <div className="space-y-2">
             <label htmlFor="projectDescription" className="text-sm">
-              Project Description
+              Project Description *
             </label>
             <textarea
               id="projectDescription"
@@ -301,15 +301,13 @@ export function ContactSection() {
             <label htmlFor="consent" className="text-xs text-gray-600">
               By checking this box, you consent to the processing and sharing of
               your personal data for the purpose of addressing your specified
-              queries
+              queries *
             </label>
           </div>
 
           {errors.recaptcha && (
             <div className="text-center">
-              <span className="text-red-500 text-xs">
-                {errors.recaptcha}
-              </span>
+              <span className="text-red-500 text-xs">{errors.recaptcha}</span>
             </div>
           )}
 
@@ -326,7 +324,7 @@ export function ContactSection() {
 
           <Button
             type="submit"
-            disabled={isSubmitting || !token}
+            disabled={isSubmitting}
             className="w-full h-12 bg-gradient-to-r from-webforge-accent to-orange-500 hover:from-webforge-accent/90 hover:to-orange-600 text-white disabled:opacity-50"
           >
             {isSubmitting ? "Sending..." : "Send"}
