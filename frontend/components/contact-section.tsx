@@ -145,7 +145,7 @@ export function ContactSection() {
       setFormData({
         name: "",
         email: "",
-        enquiryType: "Get a Quote",
+        enquiryType: "General",
         currentWebsite: "",
         projectDescription: "",
         consent: false,
