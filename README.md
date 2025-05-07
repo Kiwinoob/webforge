@@ -16,6 +16,9 @@ Our team combines technical expertise with **creative vision**, ensuring each pr
 4. npm run dev
 
 # Version History
+Version 2.1.1
+- Testing EmailJS & reCAPTCHA
+
 Version 2.1
 - added email js and recaptcha
 - added simple form validation
