@@ -1,7 +1,8 @@
 # WebForge
 
 <p align='center'>
-  <img src="/frontend/public/WebForgeLogoWhite.png" width=150 />
+  <img media="(prefers-color-scheme: dark)" src="/frontend/public/WebForgeLogoWhite.png" width=150 />
+  <img media="(prefers-color-scheme: light)" src="/frontend/public/WebForgeLogoBlack.png" width=150 />
 </p>
 
 WebForge was founded in 2025 by a group of **Singaporean students** to meet the demands of small businesses seeking to grow their **online presence**. Since then, we have dedicated ourselves to forging **powerful**, **user-friendly** websites that help brands **stand out** in the digital landscape.
