@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import FadeInUp from './fade-in-up';
+import FadeInUp from "./fade-in-up";
 
 // Define the type for portfolio items
 type PortfolioItem = {
@@ -24,20 +24,20 @@ const fallbackPortfolioItems: PortfolioItem[] = [
       "We revamped Belmacs Engineering's website with a fresh, modern design tailored to the client's evolving brand and user expectations. Our team updated the visual layout, improved usability, and optimized performance across devices. The result is a clean, responsive site that feels current, intuitive, and aligned with the client's goals—giving their online presence new life and a stronger impact.",
     client: "Belmacs Pte Ltd",
     category: "Business",
-      imageUrl: "/belmacs.png",
+    imageUrl: "/belmacs.png",
     projectUrl: "https://www.belmacs.com.sg/",
   },
 ];
 
 async function getProjects(): Promise<PortfolioItem[]> {
   try {
-    const res = await fetch('http://localhost:8080/project', { 
-      cache: 'no-store',
+    const res = await fetch("http://localhost:8080/project", {
+      cache: "no-store",
       // Add a reasonable timeout to prevent hanging if server is down
-      signal: AbortSignal.timeout(5000) 
+      signal: AbortSignal.timeout(5000),
     });
-    
-    if (!res.ok) throw new Error('Failed to fetch projects');
+
+    if (!res.ok) throw new Error("Failed to fetch projects");
     return res.json();
   } catch (error) {
     console.log("Backend server error, using fallback data:", error);
@@ -47,7 +47,7 @@ async function getProjects(): Promise<PortfolioItem[]> {
 
 export async function PortfolioSection() {
   const projects = await getProjects();
-  
+
   return (
     <section
       id="portfolio"
@@ -82,13 +82,19 @@ export async function PortfolioSection() {
                 <h3 className="text-2xl font-bold text-webforge-dark mb-4">
                   {project.title}
                 </h3>
-                <p className="text-webforge-dark/80 mb-6">{project.description}</p>
+                <p className="text-webforge-dark/80 mb-6">
+                  {project.description}
+                </p>
                 <div className="flex justify-end">
-                  <Link href={project.projectUrl}>
+                  <a
+                    href={project.projectUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
                     <Button className="bg-gradient-to-r from-webforge-accent to-orange-500 hover:from-webforge-accent/90 hover:to-orange-600 text-white">
                       Visit
                     </Button>
-                  </Link>
+                  </a>
                 </div>
               </div>
             </div>
