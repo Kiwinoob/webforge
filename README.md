@@ -5,7 +5,7 @@
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="/frontend/public/WebForgeLogoWhite.png" />
     <source media="(prefers-color-scheme: light)" srcset="/frontend/public/WebForgeLogoBlack.png" />
-    <img src="/frontend/public/WebForgeLogoBlack.png" width="150" alt="WebForge Logo" />
+    <img src="/frontend/public/WebForgeLogoBlack.png" width="300" alt="WebForge Logo" />
   </picture>
 </p>
 
