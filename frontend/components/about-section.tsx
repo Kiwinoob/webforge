@@ -3,10 +3,7 @@ import FadeInUp from "./fade-in-up";
 
 export function AboutSection() {
   return (
-    <section
-      id="about"
-      className="w-full pt-20  bg-webforge-background"
-    >
+    <section id="about" className="w-full pt-20  bg-webforge-background">
       <FadeInUp className="container px-16 sm:px-12 md:px-12 lg:px-8">
         {/* Header */}
         <div className="mx-auto max-w-3xl text-center mb-16 lg:mb-0">

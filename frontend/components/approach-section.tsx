@@ -1,12 +1,9 @@
 import Image from "next/image";
-import FadeInUp from './fade-in-up';
+import FadeInUp from "./fade-in-up";
 
 export function ApproachSection() {
   return (
-    <section
-      id="approach"
-      className="w-full mt-20  bg-webforge-background"
-    >
+    <section id="approach" className="w-full pt-20  bg-webforge-background">
       <FadeInUp className="container px-16 sm:px-12 md:px-12 lg:px-8">
         <div className="mx-auto max-w-3xl text-center mb-8 sm:mb-16">
           <h3 className="text-3xl font-bold tracking-tighter text-webforge-dark sm:text-4xl">
@@ -42,9 +39,9 @@ export function ApproachSection() {
             </p>
           </div>
         </div>
-        </FadeInUp>
+      </FadeInUp>
 
-        <FadeInUp className="container px-16 sm:px-12 md:px-12 lg:px-8">
+      <FadeInUp className="container px-16 sm:px-12 md:px-12 lg:px-8">
         {/* Second Section - A Collaborative Process */}
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-16 items-center mb-16">
           <div>
@@ -71,11 +68,10 @@ export function ApproachSection() {
             />
           </div>
         </div>
-        </FadeInUp>
+      </FadeInUp>
 
-
-        {/* Third Section - Ongoing Support */}
-        <FadeInUp className="container px-16 sm:px-12 md:px-12 lg:px-8">
+      {/* Third Section - Ongoing Support */}
+      <FadeInUp className="container px-16 sm:px-12 md:px-12 lg:px-8">
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-16 items-center mb-16">
           <div className="order-2 md:order-1">
             <Image
@@ -99,8 +95,7 @@ export function ApproachSection() {
             </p>
           </div>
         </div>
-        </FadeInUp>
-      
+      </FadeInUp>
     </section>
   );
 }
