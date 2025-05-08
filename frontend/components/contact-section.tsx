@@ -1,18 +1,31 @@
 "use client";
 
 import type React from "react";
-import { useState, useEffect, useCallback } from "react";
+import { useEffect, useCallback } from "react";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 import { Checkbox } from "@/components/ui/checkbox";
 import FadeInUp from "./fade-in-up";
 import emailjs from "@emailjs/browser";
 import { useReCaptcha } from "next-recaptcha-v3";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import {
+  contactFormSchema,
+  type ContactFormValues,
+} from "@/lib/schema/contact-form-schema";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
 
 export function ContactSection() {
   const { executeRecaptcha } = useReCaptcha();
   const { toast } = useToast();
-  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const siteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
   const emailJsServiceId = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID;
@@ -46,65 +59,20 @@ export function ContactSection() {
       return null;
     }
   }, [executeRecaptcha]);
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    enquiryType: "",
-    currentWebsite: "",
-    projectDescription: "",
-    consent: false,
+
+  const form = useForm<ContactFormValues>({
+    resolver: zodResolver(contactFormSchema),
+    defaultValues: {
+      name: "",
+      email: "",
+      enquiryType: "General",
+      currentWebsite: "",
+      projectDescription: "",
+      consent: false,
+    },
   });
 
-  const handleChange = (
-    e: React.ChangeEvent<
-      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
-    >
-  ) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-  };
-
-  const handleCheckboxChange = (checked: boolean) => {
-    setFormData((prev) => ({ ...prev, consent: checked }));
-  };
-
-  const [errors, setErrors] = useState<Record<string, string>>({});
-
-  const validateForm = () => {
-    const newErrors: Record<string, string> = {};
-
-    if (!formData.name.trim()) {
-      newErrors.name = "Name is required";
-    }
-
-    if (!formData.email.trim()) {
-      newErrors.email = "Email is required";
-    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-      newErrors.email = "Please enter a valid email address";
-    }
-
-    if (!formData.enquiryType) {
-      newErrors.enquiryType = "Please select an enquiry type";
-    }
-
-    if (!formData.projectDescription.trim()) {
-      newErrors.projectDescription = "Project description is required";
-    }
-
-    if (!formData.consent) {
-      newErrors.consent = "You must agree to the terms";
-    }
-
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!validateForm()) {
-      return;
-    }
-
+  const onSubmit = async (data: ContactFormValues) => {
     if (
       !siteKey ||
       !emailJsServiceId ||
@@ -122,37 +90,27 @@ export function ContactSection() {
       return;
     }
 
-    setIsSubmitting(true);
-
     const recaptchaToken = await handleReCaptchaVerify();
 
     if (!recaptchaToken) {
-      setErrors((prev) => ({
-        ...prev,
-        recaptcha: "reCAPTCHA verification failed. Please try again.",
-      }));
-      setIsSubmitting(false);
+      toast({
+        variant: "destructive",
+        title: "Error",
+        description: "reCAPTCHA verification failed. Please try again.",
+      });
       return;
     }
 
     const templateParams = {
-      ...formData,
+      ...data,
       "g-recaptcha-response": recaptchaToken,
     };
 
     try {
       await emailjs.send(emailJsServiceId, emailJsTemplateId, templateParams);
-      console.log("Form submitted successfully:", formData);
-      setFormData({
-        name: "",
-        email: "",
-        enquiryType: "General",
-        currentWebsite: "",
-        projectDescription: "",
-        consent: false,
-      });
-      setErrors({});
+      form.reset();
       toast({
+        variant: "success",
         title: "Success!",
         description: "Thank you for your message. We'll get back to you soon!",
       });
@@ -163,8 +121,6 @@ export function ContactSection() {
         title: "Error",
         description: "Failed to send message. Please try again later.",
       });
-    } finally {
-      setIsSubmitting(false);
     }
   };
 
@@ -183,149 +139,160 @@ export function ContactSection() {
           </h3>
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-6">
-          <div className="space-y-2">
-            <label htmlFor="name" className="text-sm">
-              Name *
-            </label>
-            <input
-              id="name"
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+            <FormField
+              control={form.control}
               name="name"
-              value={formData.name}
-              onChange={handleChange}
-              className={`w-full h-10 px-3 border ${
-                errors.name ? "border-red-500" : "border-gray-300"
-              } rounded`}
-              required
+              render={({ field }) => (
+                <FormItem className="space-y-2">
+                  <FormLabel className="text-sm">Name *</FormLabel>
+                  <FormControl>
+                    <input
+                      placeholder="Your Name"
+                      {...field}
+                      className="w-full h-10 px-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-webforge-accent"
+                    />
+                  </FormControl>
+                  <FormMessage className="text-xs" />
+                </FormItem>
+              )}
             />
-            {errors.name && (
-              <span className="text-red-500 text-xs">{errors.name}</span>
-            )}
-          </div>
 
-          <div className="space-y-2">
-            <label htmlFor="email" className="text-sm">
-              Email *
-            </label>
-            <input
-              id="email"
+            <FormField
+              control={form.control}
               name="email"
-              type="email"
-              value={formData.email}
-              onChange={handleChange}
-              className={`w-full h-10 px-3 border ${
-                errors.email ? "border-red-500" : "border-gray-300"
-              } rounded`}
-              required
+              render={({ field }) => (
+                <FormItem className="space-y-2">
+                  <FormLabel className="text-sm">Email *</FormLabel>
+                  <FormControl>
+                    <input
+                      placeholder="Your Email"
+                      {...field}
+                      type="email"
+                      className="w-full h-10 px-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-webforge-accent"
+                    />
+                  </FormControl>
+                  <FormMessage className="text-xs" />
+                </FormItem>
+              )}
             />
-            {errors.email && (
-              <span className="text-red-500 text-xs">{errors.email}</span>
-            )}
-          </div>
 
-          <div className="space-y-2">
-            <label htmlFor="enquiryType" className="text-sm">
-              Enquiry Type *
-            </label>
-            <div className="relative">
-              <select
-                id="enquiryType"
-                name="enquiryType"
-                value={formData.enquiryType}
-                onChange={handleChange}
-                className={`w-full h-10 px-3 border ${
-                  errors.enquiryType ? "border-red-500" : "border-gray-300"
-                } rounded appearance-none pr-10`}
-                required
-              >
-                <option value="General">General</option>
-                <option value="Get a Quote">Get a Quote</option>
-                <option value="Pricing">Pricing</option>
-              </select>
-              <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3">
-                <svg
-                  width="12"
-                  height="6"
-                  viewBox="0 0 12 6"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M1 1L6 5L11 1"
-                    stroke="#666666"
-                    strokeWidth="1.5"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-              </div>
-            </div>
-          </div>
+            <FormField
+              control={form.control}
+              name="enquiryType"
+              render={({ field }) => (
+                <FormItem className="space-y-2">
+                  <FormLabel className="text-sm">Enquiry Type *</FormLabel>
+                  <div className="relative">
+                    <FormControl>
+                      <select
+                        {...field}
+                        className="w-full h-10 px-3 border border-gray-300 rounded appearance-none pr-10 focus:outline-none focus:ring-2 focus:ring-webforge-accent"
+                      >
+                        <option value="General">General</option>
+                        <option value="Get a Quote">Get a Quote</option>
+                        <option value="Pricing">Pricing</option>
+                      </select>
+                    </FormControl>
+                    <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3">
+                      <svg
+                        width="12"
+                        height="6"
+                        viewBox="0 0 12 6"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M1 1L6 5L11 1"
+                          stroke="#666666"
+                          strokeWidth="1.5"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                      </svg>
+                    </div>
+                  </div>
+                  <FormMessage className="text-xs" />
+                </FormItem>
+              )}
+            />
 
-          {formData.enquiryType === "Get a Quote" && (
-            <div className="space-y-2">
-              <label htmlFor="currentWebsite" className="text-sm">
-                Current Website (if any)
-              </label>
-              <input
-                id="currentWebsite"
+            {form.watch("enquiryType") === "Get a Quote" && (
+              <FormField
+                control={form.control}
                 name="currentWebsite"
-                value={formData.currentWebsite}
-                onChange={handleChange}
-                className="w-full h-10 px-3 border border-gray-300 rounded"
+                render={({ field }) => (
+                  <FormItem className="space-y-2">
+                    <FormLabel className="text-sm">
+                      Current Website (if any)
+                    </FormLabel>
+                    <FormControl>
+                      <input
+                        placeholder="Your Website URL"
+                        {...field}
+                        className="w-full h-10 px-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-webforge-accent"
+                      />
+                    </FormControl>
+                    <FormMessage className="text-xs" />
+                  </FormItem>
+                )}
               />
-            </div>
-          )}
-
-          <div className="space-y-2">
-            <label htmlFor="projectDescription" className="text-sm">
-              Project Description *
-            </label>
-            <textarea
-              id="projectDescription"
-              name="projectDescription"
-              value={formData.projectDescription}
-              onChange={handleChange}
-              className={`w-full h-32 px-3 py-2 border ${
-                errors.projectDescription ? "border-red-500" : "border-gray-300"
-              } rounded`}
-              required
-            ></textarea>
-            {errors.projectDescription && (
-              <span className="text-red-500 text-xs">
-                {errors.projectDescription}
-              </span>
             )}
-          </div>
 
-          <div className="flex items-start space-x-2">
-            <Checkbox
-              id="consent"
-              checked={formData.consent}
-              onCheckedChange={handleCheckboxChange}
-              className="mt-1"
+            <FormField
+              control={form.control}
+              name="projectDescription"
+              render={({ field }) => (
+                <FormItem className="space-y-2">
+                  <FormLabel className="text-sm">
+                    Project Description *
+                  </FormLabel>
+                  <FormControl>
+                    <textarea
+                      placeholder="Your Project Description"
+                      {...field}
+                      className="w-full h-32 px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-webforge-accent"
+                    />
+                  </FormControl>
+                  <FormMessage className="text-xs" />
+                </FormItem>
+              )}
             />
-            <label htmlFor="consent" className="text-xs text-gray-600">
-              * By checking this box, you consent to the processing and sharing
-              of your personal data for the purpose of addressing your specified
-              queries
-            </label>
-          </div>
 
-          {errors.recaptcha && (
-            <div className="text-center">
-              <span className="text-red-500 text-xs">{errors.recaptcha}</span>
-            </div>
-          )}
+            <FormField
+              control={form.control}
+              name="consent"
+              render={({ field }) => (
+                <FormItem>
+                  <div className="flex items-start space-x-2">
+                    <FormControl>
+                      <Checkbox
+                        checked={field.value}
+                        onCheckedChange={field.onChange}
+                        className="mt-1"
+                      />
+                    </FormControl>
+                    <FormLabel className="text-xs text-gray-600">
+                      * By checking this box, you consent to the processing and
+                      sharing of your personal data for the purpose of
+                      addressing your specified queries
+                    </FormLabel>
+                  </div>
+                  <FormMessage className="text-xs" />
+                </FormItem>
+              )}
+            />
 
-          <Button
-            type="submit"
-            disabled={isSubmitting}
-            className="w-full h-12 bg-gradient-to-r from-webforge-accent to-orange-500 hover:from-webforge-accent/90 hover:to-orange-600 text-white disabled:opacity-50"
-          >
-            {isSubmitting ? "Sending..." : "Send"}
-          </Button>
-        </form>
+            <Button
+              type="submit"
+              disabled={form.formState.isSubmitting}
+              className="w-full h-12 bg-gradient-to-r from-webforge-accent to-orange-500 hover:from-webforge-accent/90 hover:to-orange-600 text-white disabled:opacity-50"
+            >
+              {form.formState.isSubmitting ? "Sending..." : "Send"}
+            </Button>
+          </form>
+        </Form>
       </FadeInUp>
     </section>
   );
