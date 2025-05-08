@@ -9,23 +9,45 @@ type PortfolioItem = {
   id: string;
   title: string;
   description: string;
+  client: string;
+  category: string;
   imageUrl: string;
   projectUrl: string;
 };
 
-// Portfolio data
-const portfolioItems: PortfolioItem[] = [
+// Fallback portfolio data in the case of backend failure
+const fallbackPortfolioItems: PortfolioItem[] = [
   {
     id: "1",
     title: "Belmacs Engineering Website Revamp",
     description:
       "We revamped Belmacs Engineering's website with a fresh, modern design tailored to the client's evolving brand and user expectations. Our team updated the visual layout, improved usability, and optimized performance across devices. The result is a clean, responsive site that feels current, intuitive, and aligned with the client's goals—giving their online presence new life and a stronger impact.",
-    imageUrl: "/belmacs.png",
+    client: "Belmacs Pte Ltd",
+    category: "Business",
+      imageUrl: "/belmacs.png",
     projectUrl: "https://www.belmacs.com.sg/",
   },
 ];
 
-export function PortfolioSection() {
+async function getProjects(): Promise<PortfolioItem[]> {
+  try {
+    const res = await fetch('http://localhost:8080/project', { 
+      cache: 'no-store',
+      // Add a reasonable timeout to prevent hanging if server is down
+      signal: AbortSignal.timeout(5000) 
+    });
+    
+    if (!res.ok) throw new Error('Failed to fetch projects');
+    return res.json();
+  } catch (error) {
+    console.log("Backend server error, using fallback data:", error);
+    return fallbackPortfolioItems;
+  }
+}
+
+export async function PortfolioSection() {
+  const projects = await getProjects();
+  
   return (
     <section
       id="portfolio"
@@ -42,15 +64,15 @@ export function PortfolioSection() {
         </div>
 
         <div className="space-y-20">
-          {portfolioItems.map((item) => (
+          {projects.map((project) => (
             <div
-              key={item.id}
+              key={project.id}
               className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center"
             >
               <div>
                 <Image
-                  src={item.imageUrl || "/placeholder.svg"}
-                  alt={item.title}
+                  src={project.imageUrl || "/placeholder.svg"}
+                  alt={project.title}
                   width={600}
                   height={400}
                   className="w-full h-auto"
@@ -58,11 +80,11 @@ export function PortfolioSection() {
               </div>
               <div>
                 <h3 className="text-2xl font-bold text-webforge-dark mb-4">
-                  {item.title}
+                  {project.title}
                 </h3>
-                <p className="text-webforge-dark/80 mb-6">{item.description}</p>
+                <p className="text-webforge-dark/80 mb-6">{project.description}</p>
                 <div className="flex justify-end">
-                  <Link href={item.projectUrl}>
+                  <Link href={project.projectUrl}>
                     <Button className="bg-gradient-to-r from-webforge-accent to-orange-500 hover:from-webforge-accent/90 hover:to-orange-600 text-white">
                       Visit
                     </Button>
