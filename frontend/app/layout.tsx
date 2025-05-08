@@ -10,7 +10,11 @@ export const metadata = {
   title: "Webforge - Professional Website Creation Services",
   description:
     "Webforge provides professional website creation services tailored to your business needs. From design to deployment, we handle it all.",
+  keywords:
+    "custom web design, small business websites, responsive web design, SEO-friendly websites, professional web development",
 };
+
+import { Toaster } from "@/components/ui/toaster";
 
 export default function RootLayout({
   children,
@@ -32,6 +36,7 @@ export default function RootLayout({
             {children}
           </ReCaptchaProvider>
         </ThemeProvider>
+        <Toaster />
       </body>
     </html>
   );

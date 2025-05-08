@@ -3,6 +3,7 @@
 import type React from "react";
 import { useState, useEffect, useCallback } from "react";
 import { Button } from "@/components/ui/button";
+import { useToast } from "@/hooks/use-toast";
 import { Checkbox } from "@/components/ui/checkbox";
 import FadeInUp from "./fade-in-up";
 import emailjs from "@emailjs/browser";
@@ -10,10 +11,8 @@ import { useReCaptcha } from "next-recaptcha-v3";
 
 export function ContactSection() {
   const { executeRecaptcha } = useReCaptcha();
+  const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitStatus, setSubmitStatus] = useState<"success" | "error" | null>(
-    null
-  );
 
   const siteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
   const emailJsServiceId = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID;
@@ -102,8 +101,6 @@ export function ContactSection() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSubmitStatus(null);
-
     if (!validateForm()) {
       return;
     }
@@ -117,7 +114,11 @@ export function ContactSection() {
       console.error(
         "One or more environment variables are not set for EmailJS or reCAPTCHA."
       );
-      alert("Configuration error. Please contact support.");
+      toast({
+        variant: "destructive",
+        title: "Configuration Error",
+        description: "Please contact support.",
+      });
       return;
     }
 
@@ -151,12 +152,17 @@ export function ContactSection() {
         consent: false,
       });
       setErrors({});
-      setSubmitStatus("success");
-      alert("Thank you for your message. We'll get back to you soon!");
+      toast({
+        title: "Success!",
+        description: "Thank you for your message. We'll get back to you soon!",
+      });
     } catch (error) {
       console.error("Failed to send email:", error);
-      setSubmitStatus("error");
-      alert("Failed to send message. Please try again later.");
+      toast({
+        variant: "destructive",
+        title: "Error",
+        description: "Failed to send message. Please try again later.",
+      });
     } finally {
       setIsSubmitting(false);
     }
@@ -310,17 +316,6 @@ export function ContactSection() {
             <div className="text-center">
               <span className="text-red-500 text-xs">{errors.recaptcha}</span>
             </div>
-          )}
-
-          {submitStatus === "success" && (
-            <p className="text-green-600 text-center">
-              Your message has been sent successfully!
-            </p>
-          )}
-          {submitStatus === "error" && (
-            <p className="text-red-500 text-center">
-              Failed to send message. Please try again.
-            </p>
           )}
 
           <Button
