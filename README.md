@@ -16,6 +16,10 @@ Our team combines technical expertise with **creative vision**, ensuring each pr
 4. npm run dev
 
 # Version History
+Version 2.1.2
+- Improvements to overall layout for Desktop View
+- Improvements to overall layout for Mobile View
+
 Version 2.1.1
 - Testing EmailJS & reCAPTCHA
 
