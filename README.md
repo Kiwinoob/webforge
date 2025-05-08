@@ -22,6 +22,13 @@ Our team combines technical expertise with **creative vision**, ensuring each pr
 4. npm run dev
 
 # Version History
+Version 2.2
+| Backend
+- Configured GetAllProjects on ProjectController.java
+| Frontend
+- portfolio-section now retrieves projects from backend server
+- In the case of backend failure, portfolio-section will display hardcoded projects.
+
 Version 2.1.2
 - Improvements to overall layout for Desktop View
 - Improvements to overall layout for Mobile View
