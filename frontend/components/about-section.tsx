@@ -1,28 +1,25 @@
 import Image from "next/image";
-import FadeInUp from './fade-in-up';
+import FadeInUp from "./fade-in-up";
 
 export function AboutSection() {
   return (
     <section
       id="about"
-      className="w-full py-8 md:py-16 lg:py-20 bg-webforge-background"
+      className="w-full pt-20  bg-webforge-background"
     >
-      <FadeInUp className="container px-4 md:px-6">
+      <FadeInUp className="container px-16 sm:px-12 md:px-12 lg:px-8">
         {/* Header */}
-        <div className="mx-auto max-w-3xl text-center mb-16">
+        <div className="mx-auto max-w-3xl text-center mb-16 lg:mb-0">
           <h2 className="text-3xl font-bold tracking-tighter text-webforge-dark sm:text-4xl">
             About{" "}
             <span className="bg-gradient-to-r from-webforge-accent to-amber-600 text-transparent bg-clip-text font-bold">
               WebForge
             </span>
           </h2>
-          <p className="mt-4 text-webforge-dark/80 md:text-xl">
-            Learn about our mission, and how we help businesses succeed online.
-          </p>
         </div>
 
         {/* Our Story */}
-        <div className="grid gap-8 lg:grid-cols-[2fr_1fr] items-center mb-20">
+        <div className="grid gap-4 lg:grid-cols-[2fr_1fr] items-center -mt-8 lg:-mt-12">
           <div className="space-y-6">
             <h3 className="text-2xl font-bold tracking-tighter text-webforge-dark">
               Our Story
@@ -42,13 +39,13 @@ export function AboutSection() {
               businesses.
             </p>
           </div>
-          <div className="flex justify-center lg:justify-end">
+          <div className="hidden lg:flex justify-center lg:justify-end">
             <Image
               src="/WebForgeLogoBlack.png"
               alt="WebForge Logo"
-              width={400}
-              height={400}
-              className="h-auto w-auto max-w-[400px] "
+              width={450}
+              height={450}
+              className="h-auto w-auto max-w-[450px]"
             />
           </div>
         </div>

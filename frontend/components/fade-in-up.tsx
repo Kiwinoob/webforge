@@ -10,7 +10,7 @@ interface FadeInUpProps {
 
 const FadeInUpSection: React.FC<FadeInUpProps> = ({ children, className }) => {
   const { ref, inView } = useInView({
-    threshold: 0.1,
+    threshold: 0.5,
     triggerOnce: true,
   });
 

@@ -8,12 +8,12 @@ export function Footer() {
           © {new Date().getFullYear()} Webforge. All rights reserved.
         </p>
         <div className="flex gap-4">
-          <Link href="#" className="text-sm text-muted-foreground underline-offset-4 hover:underline">
+          {/* <Link href="#" className="text-sm text-muted-foreground underline-offset-4 hover:underline">
             Terms
           </Link>
           <Link href="#" className="text-sm text-muted-foreground underline-offset-4 hover:underline">
             Privacy
-          </Link>
+          </Link> */}
         </div>
       </div>
     </footer>

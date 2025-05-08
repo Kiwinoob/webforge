@@ -31,7 +31,7 @@ export function PortfolioSection() {
       id="portfolio"
       className="w-full py-8 md:py-16 lg:py-20 bg-webforge-background"
     >
-      <FadeInUp className="container px-4 md:px-6">
+      <FadeInUp className="container px-16 sm:px-12 md:px-12 lg:px-8">
         <div className="mx-auto max-w-3xl text-center mb-16">
           <h3 className="text-3xl font-bold tracking-tighter text-webforge-dark sm:text-4xl">
             Our{" "}

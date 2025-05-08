@@ -5,10 +5,10 @@ export function ApproachSection() {
   return (
     <section
       id="approach"
-      className="w-full py-8 md:py-16 lg:py-20 bg-webforge-background"
+      className="w-full mt-20  bg-webforge-background"
     >
-      <FadeInUp className="container px-4 md:px-6 ">
-        <div className="mx-auto max-w-3xl text-center mb-16">
+      <FadeInUp className="container px-16 sm:px-12 md:px-12 lg:px-8">
+        <div className="mx-auto max-w-3xl text-center mb-10 lg:mb-20">
           <h3 className="text-3xl font-bold tracking-tighter text-webforge-dark sm:text-4xl">
             Our{" "}
             <span className="bg-gradient-to-r from-webforge-accent to-amber-600 text-transparent bg-clip-text font-bold">
@@ -18,7 +18,7 @@ export function ApproachSection() {
         </div>
 
         {/* First Section - We build your website from scratch */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center mb-16">
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-16 items-center mb-16">
           <div className="order-2 md:order-1">
             <Image
               src="/approach1.png"
@@ -33,7 +33,7 @@ export function ApproachSection() {
               We build your website from scratch—tailored to your brand, your
               audience, and your goals.
             </h3>
-            <p className="text-webforge-dark/80 mb-4">
+            <p className="text-webforge-dark/80 mb-4 ">
               Whether you're a freelancer, small business owner, or professional
               service provider, we design clean, fast, and responsive sites that
               your visitors will love. Our websites are built to match you. Our
@@ -42,9 +42,11 @@ export function ApproachSection() {
             </p>
           </div>
         </div>
+        </FadeInUp>
 
+        <FadeInUp className="container px-16 sm:px-12 md:px-12 lg:px-8">
         {/* Second Section - A Collaborative Process */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center mb-16">
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-16 items-center mb-16">
           <div>
             <h3 className="text-2xl font-bold text-webforge-dark mb-4">
               A Collaborative Process from Start to Finish
@@ -69,9 +71,12 @@ export function ApproachSection() {
             />
           </div>
         </div>
+        </FadeInUp>
+
 
         {/* Third Section - Ongoing Support */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+        <FadeInUp className="container px-16 sm:px-12 md:px-12 lg:px-8">
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-16 items-center mb-16">
           <div className="order-2 md:order-1">
             <Image
               src="/approach3.png"
@@ -94,7 +99,8 @@ export function ApproachSection() {
             </p>
           </div>
         </div>
-      </FadeInUp>
+        </FadeInUp>
+      
     </section>
   );
 }

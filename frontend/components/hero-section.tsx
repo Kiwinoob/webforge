@@ -30,7 +30,7 @@ export function HeroSection() {
   return (
     <section
       id="/"
-      className="relative w-full h-screen flex items-center overflow-hidden"
+      className="relative w-full h-screen flex items-center justify-start overflow-hidden"
     >
       {/* Video Background */}
       <div className="absolute inset-0 z-0">
@@ -51,8 +51,8 @@ export function HeroSection() {
       </div>
 
       {/* Content */}
-      <div className="container relative z-10 px-4 md:px-6 -mt-20">
-        <div className="max-w-3xl">
+      <div className="container relative z-10 pr-4 md:pr-6 -mt-20 ml-0 pl-0">
+        <div className="max-w-3xl mr-auto ml-4 sm:ml-6 md:ml-8 lg:ml-32">
           <h1 className="text-4xl font-bold tracking-tighter text-white sm:text-5xl xl:text-6xl/none mb-4">
             Crafting Digital Excellence
           </h1>
