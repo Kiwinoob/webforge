@@ -8,7 +8,7 @@ export function ApproachSection() {
       className="w-full mt-20  bg-webforge-background"
     >
       <FadeInUp className="container px-16 sm:px-12 md:px-12 lg:px-8">
-        <div className="mx-auto max-w-3xl text-center mb-10 lg:mb-20">
+        <div className="mx-auto max-w-3xl text-center mb-8 sm:mb-16">
           <h3 className="text-3xl font-bold tracking-tighter text-webforge-dark sm:text-4xl">
             Our{" "}
             <span className="bg-gradient-to-r from-webforge-accent to-amber-600 text-transparent bg-clip-text font-bold">

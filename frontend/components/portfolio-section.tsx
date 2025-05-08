@@ -17,7 +17,7 @@ type PortfolioItem = {
 const portfolioItems: PortfolioItem[] = [
   {
     id: "1",
-    title: "Belmacs Website Re-design",
+    title: "Belmacs Engineering Website Revamp",
     description:
       "We revamped Belmacs Engineering's website with a fresh, modern design tailored to the client's evolving brand and user expectations. Our team updated the visual layout, improved usability, and optimized performance across devices. The result is a clean, responsive site that feels current, intuitive, and aligned with the client's goals—giving their online presence new life and a stronger impact.",
     imageUrl: "/belmacs.png",
@@ -32,7 +32,7 @@ export function PortfolioSection() {
       className="w-full py-8 md:py-16 lg:py-20 bg-webforge-background"
     >
       <FadeInUp className="container px-16 sm:px-12 md:px-12 lg:px-8">
-        <div className="mx-auto max-w-3xl text-center mb-16">
+        <div className="mx-auto max-w-3xl text-center mb-8 sm:mb-16">
           <h3 className="text-3xl font-bold tracking-tighter text-webforge-dark sm:text-4xl">
             Our{" "}
             <span className="bg-gradient-to-r from-webforge-accent to-amber-600 text-transparent bg-clip-text font-bold">
