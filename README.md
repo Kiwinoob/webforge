@@ -1,10 +1,14 @@
 # WebForge
 
 
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="/frontend/public/WebForgeLogoWhite.png">
-  <source media="(prefers-color-scheme: light)" srcset="/frontend/public/WebForgeLogoBlack.png">
-</picture>
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="/frontend/public/WebForgeLogoWhite.png" />
+    <source media="(prefers-color-scheme: light)" srcset="/frontend/public/WebForgeLogoBlack.png" />
+    <img src="/frontend/public/WebForgeLogoBlack.png" width="150" alt="WebForge Logo" />
+  </picture>
+</p>
+
 
 WebForge was founded in 2025 by a group of **Singaporean students** to meet the demands of small businesses seeking to grow their **online presence**. Since then, we have dedicated ourselves to forging **powerful**, **user-friendly** websites that help brands **stand out** in the digital landscape.
 
