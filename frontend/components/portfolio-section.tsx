@@ -31,7 +31,7 @@ const fallbackPortfolioItems: PortfolioItem[] = [
 
 async function getProjects(): Promise<PortfolioItem[]> {
   try {
-    const res = await fetch("http://localhost:8080/project", {
+    const res = await fetch("https://webforge-backend.onrender.com/project", {
       cache: "no-store",
       // Add a reasonable timeout to prevent hanging if server is down
       signal: AbortSignal.timeout(5000),
