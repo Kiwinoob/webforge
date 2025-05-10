@@ -7,9 +7,9 @@ services:
       - "8080:8080"
     environment:
       - SPRING_PROFILES_ACTIVE=prod
+      - FIREBASE_CONFIG=${FIREBASE_CONFIG}
     networks:
       - webforge-network
-
 
 networks:
   webforge-network:
