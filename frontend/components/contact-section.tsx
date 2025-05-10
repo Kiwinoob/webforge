@@ -151,7 +151,11 @@ export function ContactSection() {
                     <input
                       placeholder="Your Name"
                       {...field}
-                      className="w-full h-10 px-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-webforge-accent"
+                      className={`w-full h-10 px-3 border rounded focus:outline-none focus:ring-2 focus:ring-webforge-accent ${
+                        form.formState.errors[field.name]
+                          ? "border-destructive"
+                          : "border-gray-300"
+                      }`}
                     />
                   </FormControl>
                   <FormMessage className="text-xs" />
@@ -170,7 +174,11 @@ export function ContactSection() {
                       placeholder="Your Email"
                       {...field}
                       type="email"
-                      className="w-full h-10 px-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-webforge-accent"
+                      className={`w-full h-10 px-3 border rounded focus:outline-none focus:ring-2 focus:ring-webforge-accent ${
+                        form.formState.errors[field.name]
+                          ? "border-destructive"
+                          : "border-gray-300"
+                      }`}
                     />
                   </FormControl>
                   <FormMessage className="text-xs" />
@@ -188,7 +196,11 @@ export function ContactSection() {
                     <FormControl>
                       <select
                         {...field}
-                        className="w-full h-10 px-3 border border-gray-300 rounded appearance-none pr-10 focus:outline-none focus:ring-2 focus:ring-webforge-accent"
+                        className={`w-full h-10 px-3 border rounded appearance-none pr-10 focus:outline-none focus:ring-2 focus:ring-webforge-accent ${
+                          form.formState.errors[field.name]
+                            ? "border-destructive"
+                            : "border-gray-300"
+                        }`}
                       >
                         <option value="General">General</option>
                         <option value="Get a Quote">Get a Quote</option>
@@ -231,7 +243,11 @@ export function ContactSection() {
                       <input
                         placeholder="Your Website URL"
                         {...field}
-                        className="w-full h-10 px-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-webforge-accent"
+                        className={`w-full h-10 px-3 border rounded focus:outline-none focus:ring-2 focus:ring-webforge-accent ${
+                          form.formState.errors[field.name]
+                            ? "border-destructive"
+                            : "border-gray-300"
+                        }`}
                       />
                     </FormControl>
                     <FormMessage className="text-xs" />
@@ -252,7 +268,11 @@ export function ContactSection() {
                     <textarea
                       placeholder="Your Project Description"
                       {...field}
-                      className="w-full h-32 px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-webforge-accent"
+                      className={`w-full h-32 px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-webforge-accent ${
+                        form.formState.errors[field.name]
+                          ? "border-destructive"
+                          : "border-gray-300"
+                      }`}
                     />
                   </FormControl>
                   <FormMessage className="text-xs" />
