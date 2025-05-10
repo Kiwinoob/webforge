@@ -18,7 +18,6 @@ import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
 import com.google.firebase.cloud.FirestoreClient;
 
-import jakarta.annotation.PostConstruct;
 
 @Configuration
 public class FirebaseConfig {
@@ -30,8 +29,8 @@ public class FirebaseConfig {
 
         FirebaseOptions options = FirebaseOptions.builder()
             .setCredentials(GoogleCredentials.fromStream(serviceAccount))
-            .setDatabaseUrl("https://<your-project-id>.firebaseio.com") // Required
-            .setProjectId("<your-project-id>") // Required
+            .setDatabaseUrl("https://webforge-d0831.firebaseio.com") // Required
+            .setProjectId("webforge-d0831") // Required
             .build();
 
         return FirebaseApp.initializeApp(options);
