@@ -22,6 +22,8 @@ Our team combines technical expertise with **creative vision**, ensuring each pr
 4. npm run dev
 
 # Version History
+Version 2.4
+- Updated portfolio-section to display videos/images
 
 Version 2.3
 -added new toast messages for contact form
