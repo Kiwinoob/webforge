@@ -15,6 +15,7 @@ export function Header() {
   const navItems = [
     { label: "About", href: "#about", sectionId: "about" },
     { label: "Approach", href: "#approach", sectionId: "approach" },
+    { label: "Design", href: "#design", sectionId: "design" },
     { label: "Portfolio", href: "#portfolio", sectionId: "portfolio" },
     { label: "Contact Us", href: "#contact", sectionId: "contact" },
   ];
@@ -79,7 +80,7 @@ export function Header() {
             src={scrolled ? WebForgeLogoBlack.src : WebForgeLogoWhite.src}
             alt="WebForge Logo"
             className="h-48 w-auto md:h-48 lg:h-64"
-            style={{ display: "block"}}
+            style={{ display: "block" }}
           />
         </a>
 

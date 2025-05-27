@@ -2,6 +2,7 @@
 
 import React, { useState, useRef, useEffect } from "react";
 import { ChevronLeft, ChevronRight, ExternalLink } from "lucide-react";
+import FadeInUp from "./fade-in-up";
 
 const DesignSection = () => {
   const designTemplates = [
@@ -35,9 +36,9 @@ const DesignSection = () => {
 
   const goToPrevious = () => {
     if (isAnimating) return;
-    
+
     setIsAnimating(true);
-    
+
     setTimeout(() => {
       setCurrentIndex((prevIndex) =>
         prevIndex === 0 ? designTemplates.length - 1 : prevIndex - 1
@@ -48,9 +49,9 @@ const DesignSection = () => {
 
   const goToNext = () => {
     if (isAnimating) return;
-    
+
     setIsAnimating(true);
-    
+
     setTimeout(() => {
       setCurrentIndex((prevIndex) =>
         prevIndex === designTemplates.length - 1 ? 0 : prevIndex + 1
@@ -59,44 +60,58 @@ const DesignSection = () => {
     }, 500);
   };
 
-  const handleIframeLoad = (index) => {
-    setIframeLoaded(prev => ({ ...prev, [index]: true }));
-    setIframeErrors(prev => ({ ...prev, [index]: false }));
+  const handleIframeLoad = (index: number) => {
+    setIframeLoaded((prev) => ({ ...prev, [index]: true }));
+    setIframeErrors((prev) => ({ ...prev, [index]: false }));
   };
 
-  const handleIframeError = (index) => {
-    setIframeErrors(prev => ({ ...prev, [index]: true }));
-    setIframeLoaded(prev => ({ ...prev, [index]: false }));
+  const handleIframeError = (index: number) => {
+    setIframeErrors((prev) => ({ ...prev, [index]: true }));
+    setIframeLoaded((prev) => ({ ...prev, [index]: false }));
   };
 
-  const openInNewTab = (url) => {
+  const openInNewTab = (url: string) => {
     window.open(url, "_blank", "noopener,noreferrer");
   };
 
   const getAllTemplates = () => {
     const templates = [];
     const totalTemplates = designTemplates.length;
-    
+
     // Create a continuous array for smooth infinite scrolling
     for (let i = 0; i < totalTemplates; i++) {
       templates.push({ ...designTemplates[i], index: i });
     }
-    
+
     return templates;
   };
 
-  const renderTemplateCard = (template, index) => {
+  const renderTemplateCard = (
+    template: {
+      id: number;
+      name: string;
+      url: string;
+      previewImage: string;
+      description: string;
+      index: number;
+    },
+    index: number
+  ) => {
     const position = index - currentIndex;
     const isCenter = position === 0;
-    const isPrev = position === -1 || (currentIndex === 0 && index === designTemplates.length - 1);
-    const isNext = position === 1 || (currentIndex === designTemplates.length - 1 && index === 0);
-    
+    const isPrev =
+      position === -1 ||
+      (currentIndex === 0 && index === designTemplates.length - 1);
+    const isNext =
+      position === 1 ||
+      (currentIndex === designTemplates.length - 1 && index === 0);
+
     // Calculate the transform for smooth sliding
     let translateX = 0;
     let scale = 0.75;
     let opacity = 0.6;
     let zIndex = 10;
-    
+
     if (isCenter) {
       translateX = 0;
       scale = 1;
@@ -125,27 +140,17 @@ const DesignSection = () => {
         key={`template-${template.id}`}
         className="absolute top-1/2 left-1/2 transition-all duration-500 ease-in-out"
         style={{
-          width: isCenter ? '600px' : '500px',
-          height: isCenter ? '400px' : '350px',
+          width: isCenter ? "600px" : "500px",
+          height: isCenter ? "850px" : "750px",
           transform: `translate(-50%, -50%) translateX(${translateX}px) scale(${scale})`,
           opacity,
           zIndex,
         }}
       >
         <div className="bg-white rounded-lg shadow-xl overflow-hidden h-full">
-          {/* Template Title */}
-          {isCenter && (
-            <div className="bg-gray-900 text-white px-6 py-3">
-              <h3 className="text-lg font-semibold">{template.name}</h3>
-              <p className="text-sm text-gray-300">
-                Template {currentIndex + 1} of {designTemplates.length}
-              </p>
-            </div>
-          )}
-
           {/* Template Content */}
           <div className="relative h-full">
-            {!iframeErrors[index] ? (
+            {!iframeErrors[index as keyof typeof iframeErrors] ? (
               <>
                 <iframe
                   src={template.url}
@@ -158,28 +163,35 @@ const DesignSection = () => {
                 />
 
                 {/* Loading overlay for center card only */}
-                {isCenter && !iframeLoaded[index] && (
-                  <div className="absolute inset-0 bg-gray-100 flex items-center justify-center">
-                    <div className="text-center">
-                      <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900 mx-auto mb-4"></div>
-                      <p className="text-gray-600">
-                        {isAnimating ? "Sliding to template..." : "Loading template..."}
-                      </p>
+                {isCenter &&
+                  !iframeLoaded[index as keyof typeof iframeLoaded] && (
+                    <div className="absolute inset-0 bg-gray-100 flex items-center justify-center">
+                      <div className="text-center">
+                        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900 mx-auto mb-4"></div>
+                        <p className="text-gray-600">
+                          {isAnimating
+                            ? "Sliding to template..."
+                            : "Loading template..."}
+                        </p>
+                      </div>
                     </div>
-                  </div>
-                )}
+                  )}
               </>
             ) : (
               // Fallback when iframe fails to load
               <div className="h-full bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center">
                 {isCenter ? (
                   <div className="text-center p-8">
-                    <ExternalLink size={48} className="mx-auto text-gray-400 mb-4" />
+                    <ExternalLink
+                      size={48}
+                      className="mx-auto text-gray-400 mb-4"
+                    />
                     <h4 className="text-xl font-semibold text-gray-700 mb-2">
                       Preview Not Available
                     </h4>
                     <p className="text-gray-600 mb-4">
-                      This template cannot be displayed in a frame due to security restrictions.
+                      This template cannot be displayed in a frame due to
+                      security restrictions.
                     </p>
                     <button
                       onClick={() => openInNewTab(template.url)}
@@ -191,7 +203,10 @@ const DesignSection = () => {
                   </div>
                 ) : (
                   <div className="text-center p-4">
-                    <ExternalLink size={24} className="mx-auto text-gray-400 mb-2" />
+                    <ExternalLink
+                      size={24}
+                      className="mx-auto text-gray-400 mb-2"
+                    />
                     <p className="text-sm text-gray-600">{template.name}</p>
                   </div>
                 )}
@@ -200,7 +215,7 @@ const DesignSection = () => {
 
             {/* Click overlay for side cards */}
             {!isCenter && !isAnimating && (isPrev || isNext) && (
-              <div 
+              <div
                 className="absolute inset-0 bg-black bg-opacity-20 cursor-pointer flex items-center justify-center transition-all duration-200 hover:bg-opacity-30"
                 onClick={() => {
                   if (isPrev) {
@@ -211,7 +226,9 @@ const DesignSection = () => {
                 }}
               >
                 <div className="bg-white bg-opacity-90 px-4 py-2 rounded-lg transform transition-transform duration-200 hover:scale-105">
-                  <p className="text-sm font-medium text-gray-800">{template.name}</p>
+                  <p className="text-sm font-medium text-gray-800">
+                    {template.name}
+                  </p>
                 </div>
               </div>
             )}
@@ -222,17 +239,16 @@ const DesignSection = () => {
   };
 
   return (
-    <div className="w-full bg-gray-50 py-12">
-      <div className="max-w-7xl mx-auto px-4">
+    <section id="design" className="w-full pt-20  bg-webforge-background">
+      <FadeInUp className="container px-16 sm:px-12 md:px-12 lg:px-8">
         {/* Header */}
         <div className="text-center mb-8">
-          <h2 className="text-3xl font-bold text-gray-900 mb-4">
-            Design Templates
-          </h2>
-          <p className="text-gray-600 max-w-2xl mx-auto">
-            Browse through our collection of professional design templates.
-            Click the arrows to navigate between different designs.
-          </p>
+          <h3 className="text-3xl font-bold tracking-tighter text-webforge-dark sm:text-4xl">
+            Our{" "}
+            <span className="bg-gradient-to-r from-webforge-accent to-amber-600 text-transparent bg-clip-text font-bold">
+              Desgin
+            </span>
+          </h3>
         </div>
 
         {/* Carousel Container */}
@@ -242,7 +258,7 @@ const DesignSection = () => {
             onClick={goToPrevious}
             disabled={isAnimating}
             className={`absolute left-8 z-30 bg-black hover:bg-gray-800 text-white p-4 rounded-full shadow-lg transition-all duration-200 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-gray-400 ${
-              isAnimating ? 'opacity-50 cursor-not-allowed scale-95' : ''
+              isAnimating ? "opacity-50 cursor-not-allowed scale-95" : ""
             }`}
             aria-label="Previous template"
           >
@@ -250,7 +266,7 @@ const DesignSection = () => {
           </button>
 
           {/* Template Viewer Container */}
-          <div className="relative w-full h-[450px] overflow-hidden">
+          <div className="relative w-full h-[600px] overflow-hidden">
             {getAllTemplates().map((template) =>
               renderTemplateCard(template, template.index)
             )}
@@ -261,7 +277,7 @@ const DesignSection = () => {
             onClick={goToNext}
             disabled={isAnimating}
             className={`absolute right-8 z-30 bg-black hover:bg-gray-800 text-white p-4 rounded-full shadow-lg transition-all duration-200 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-gray-400 ${
-              isAnimating ? 'opacity-50 cursor-not-allowed scale-95' : ''
+              isAnimating ? "opacity-50 cursor-not-allowed scale-95" : ""
             }`}
             aria-label="Next template"
           >
@@ -269,46 +285,21 @@ const DesignSection = () => {
           </button>
         </div>
 
-        {/* Pagination Dots */}
-        <div className="flex justify-center mt-8 space-x-2">
-          {designTemplates.map((_, index) => (
-            <button
-              key={index}
-              onClick={() => {
-                if (!isAnimating && index !== currentIndex) {
-                  setIsAnimating(true);
-                  setTimeout(() => {
-                    setCurrentIndex(index);
-                    setIsAnimating(false);
-                  }, 500);
-                }
-              }}
-              disabled={isAnimating}
-              className={`w-3 h-3 rounded-full transition-all duration-200 ${
-                index === currentIndex
-                  ? "bg-gray-900 scale-125"
-                  : "bg-gray-300 hover:bg-gray-400"
-              } ${isAnimating ? 'opacity-50' : ''}`}
-              aria-label={`Go to template ${index + 1}`}
-            />
-          ))}
-        </div>
-
         {/* Template Info */}
         <div className="text-center mt-6">
           <button
             onClick={() => openInNewTab(designTemplates[currentIndex].url)}
             disabled={isAnimating}
-            className={`bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg font-medium transition-colors duration-200 inline-flex items-center gap-2 ${
-              isAnimating ? 'opacity-50 cursor-not-allowed' : ''
+            className={`bg-gradient-to-r from-webforge-accent to-orange-500 hover:from-webforge-accent/90 hover:to-orange-600 text-white px-6 py-2 rounded-lg font-medium transition-colors duration-200 inline-flex items-center gap-2 ${
+              isAnimating ? "opacity-50 cursor-not-allowed" : ""
             }`}
           >
             <ExternalLink size={16} />
             View Template
           </button>
         </div>
-      </div>
-    </div>
+      </FadeInUp>
+    </section>
   );
 };
 
