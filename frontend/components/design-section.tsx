@@ -266,7 +266,7 @@ const DesignSection = () => {
           </button>
 
           {/* Template Viewer Container */}
-          <div className="relative w-full h-[600px] overflow-hidden">
+          <div className="relative w-full h-[800px] overflow-hidden">
             {getAllTemplates().map((template) =>
               renderTemplateCard(template, template.index)
             )}
