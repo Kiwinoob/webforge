@@ -224,13 +224,7 @@ const DesignSection = () => {
                     goToNext();
                   }
                 }}
-              >
-                <div className="bg-white bg-opacity-90 px-4 py-2 rounded-lg transform transition-transform duration-200 hover:scale-105">
-                  <p className="text-sm font-medium text-gray-800">
-                    {template.name}
-                  </p>
-                </div>
-              </div>
+              ></div>
             )}
           </div>
         </div>
@@ -246,7 +240,7 @@ const DesignSection = () => {
           <h3 className="text-3xl font-bold tracking-tighter text-webforge-dark sm:text-4xl">
             Our{" "}
             <span className="bg-gradient-to-r from-webforge-accent to-amber-600 text-transparent bg-clip-text font-bold">
-              Desgin
+              Designs
             </span>
           </h3>
         </div>
