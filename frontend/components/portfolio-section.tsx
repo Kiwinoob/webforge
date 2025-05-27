@@ -16,13 +16,18 @@ type PortfolioItem = {
   projectUrl: string;
 };
 
+// Helper function to detect if the URL is for a video  
+const isVideo = (url: string) => {
+  return url?.match(/\.(mp4|webm|ogg|mov)(?=\?|$)/i) !== null;
+};
+
 // Fallback portfolio data in the case of backend failure
 const fallbackPortfolioItems: PortfolioItem[] = [
   {
     id: "1",
     title: "Belmacs Engineering Website Revamp",
     description:
-      "We revamped Belmacs Engineering's website with a fresh, modern design tailored to the client's evolving brand and user expectations. Our team updated the visual layout, improved usability, and optimized performance across devices. The result is a clean, responsive site that feels current, intuitive, and aligned with the client's goals—giving their online presence new life and a stronger impact.",
+      "We revamped Belmacs Engineering's website with a fresh, modern design tailored to the client's evolving brand and user expectations. Our team updated the visual layout, improved usability, and optimized performance across devices. The result is a clean, responsive site that feels current, intuitive, and aligned with the client's goals-giving their online presence new life and a stronger impact.",
     client: "Belmacs Pte Ltd",
     category: "Business",
     imageUrl: "/belmacs.png",
@@ -89,14 +94,31 @@ export function PortfolioSection() {
               key={project.id}
               className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center"
             >
-              <div>
-                <Image
-                  src={project.imageUrl || "/placeholder.svg"}
-                  alt={project.title}
-                  width={600}
-                  height={400}
-                  className="w-full h-auto"
-                />
+              <div className="relative aspect-video bg-gray-100 rounded-md overflow-hidden">
+                {isVideo(project.imageUrl) ? (
+                  <video
+                    src={project.imageUrl}
+                    autoPlay
+                    loop
+                    muted // Important for autoplay to work in most browsers
+                    playsInline // Important for iOS
+                    className="w-full h-full object-cover"
+                    // Optional: Add a poster image that shows while the video loads
+                    // poster="/path/to/your/video-poster.jpg"
+                  >
+                    Your browser does not support the video tag.
+                  </video>
+                ) : (
+                  <Image
+                    src={project.imageUrl || "/placeholder.svg"}
+                    alt={project.title || "Project image"}
+                    width={600} // Intrinsic width
+                    height={400} // Intrinsic height
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" // Responsive sizes
+                    className="w-full h-full object-cover" // Ensure image covers the container
+                    priority={projects.indexOf(project) < 2} // Prioritize loading for the first few images
+                  />
+                )}
               </div>
               <div>
                 <h3 className="text-2xl font-bold text-webforge-dark mb-4">
