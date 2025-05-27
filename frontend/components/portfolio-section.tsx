@@ -3,6 +3,7 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import FadeInUp from "./fade-in-up";
+import { useState, useEffect } from "react";
 
 // Define the type for portfolio items
 type PortfolioItem = {
@@ -29,24 +30,43 @@ const fallbackPortfolioItems: PortfolioItem[] = [
   },
 ];
 
-async function getProjects(): Promise<PortfolioItem[]> {
+async function fetchProjects(): Promise<PortfolioItem[]> {
   try {
     const res = await fetch("https://webforge-backend.onrender.com/project", {
       cache: "no-store",
-      // Add a reasonable timeout to prevent hanging if server is down
       signal: AbortSignal.timeout(5000),
     });
 
     if (!res.ok) throw new Error("Failed to fetch projects");
-    return res.json();
+    const data = await res.json();
+    console.log("Successfully fetched projects at", new Date().toISOString());
+    return data;
   } catch (error) {
     console.log("Backend server error, using fallback data:", error);
     return fallbackPortfolioItems;
   }
 }
 
-export async function PortfolioSection() {
-  const projects = await getProjects();
+export function PortfolioSection() {
+  const [projects, setProjects] = useState<PortfolioItem[]>(
+    fallbackPortfolioItems
+  );
+
+  useEffect(() => {
+    // Initial fetch
+    fetchProjects().then(setProjects);
+
+    // Set up interval for periodic fetching every 30 seconds
+    const intervalId = setInterval(async () => {
+      const updatedProjects = await fetchProjects();
+      setProjects(updatedProjects);
+    }, 30000); // 30000 milliseconds = 30 seconds
+
+    // Cleanup interval when component unmounts
+    return () => {
+      clearInterval(intervalId);
+    };
+  }, []); // Empty dependency array means this runs once on mount
 
   return (
     <section
