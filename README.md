@@ -22,6 +22,9 @@ Our team combines technical expertise with **creative vision**, ensuring each pr
 4. npm run dev
 
 # Version History
+Version 2.5
+- Add Cron job by means of useEffect to retrieve 'Our Portfolio' section
+
 Version 2.4
 - Updated portfolio-section to display videos/images
 
