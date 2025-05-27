@@ -1,0 +1,315 @@
+"use client";
+
+import React, { useState, useRef, useEffect } from "react";
+import { ChevronLeft, ChevronRight, ExternalLink } from "lucide-react";
+
+const DesignSection = () => {
+  const designTemplates = [
+    {
+      id: 1,
+      name: "Modern Business Template",
+      url: "https://dragons-den-sg.vercel.app/",
+      previewImage: "/preview1.jpg",
+      description: "A modern business template with clean design",
+    },
+    {
+      id: 2,
+      name: "Portfolio Template",
+      url: "https://furry-friends-webforge.vercel.app/",
+      previewImage: "/preview2.jpg",
+      description: "Creative portfolio template for showcasing work",
+    },
+    {
+      id: 3,
+      name: "E-commerce Template",
+      url: "https://example-ecommerce.vercel.app/",
+      previewImage: "/preview3.jpg",
+      description: "Professional e-commerce template",
+    },
+  ];
+
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [iframeErrors, setIframeErrors] = useState({});
+  const [iframeLoaded, setIframeLoaded] = useState({});
+  const [isAnimating, setIsAnimating] = useState(false);
+
+  const goToPrevious = () => {
+    if (isAnimating) return;
+    
+    setIsAnimating(true);
+    
+    setTimeout(() => {
+      setCurrentIndex((prevIndex) =>
+        prevIndex === 0 ? designTemplates.length - 1 : prevIndex - 1
+      );
+      setIsAnimating(false);
+    }, 500);
+  };
+
+  const goToNext = () => {
+    if (isAnimating) return;
+    
+    setIsAnimating(true);
+    
+    setTimeout(() => {
+      setCurrentIndex((prevIndex) =>
+        prevIndex === designTemplates.length - 1 ? 0 : prevIndex + 1
+      );
+      setIsAnimating(false);
+    }, 500);
+  };
+
+  const handleIframeLoad = (index) => {
+    setIframeLoaded(prev => ({ ...prev, [index]: true }));
+    setIframeErrors(prev => ({ ...prev, [index]: false }));
+  };
+
+  const handleIframeError = (index) => {
+    setIframeErrors(prev => ({ ...prev, [index]: true }));
+    setIframeLoaded(prev => ({ ...prev, [index]: false }));
+  };
+
+  const openInNewTab = (url) => {
+    window.open(url, "_blank", "noopener,noreferrer");
+  };
+
+  const getAllTemplates = () => {
+    const templates = [];
+    const totalTemplates = designTemplates.length;
+    
+    // Create a continuous array for smooth infinite scrolling
+    for (let i = 0; i < totalTemplates; i++) {
+      templates.push({ ...designTemplates[i], index: i });
+    }
+    
+    return templates;
+  };
+
+  const renderTemplateCard = (template, index) => {
+    const position = index - currentIndex;
+    const isCenter = position === 0;
+    const isPrev = position === -1 || (currentIndex === 0 && index === designTemplates.length - 1);
+    const isNext = position === 1 || (currentIndex === designTemplates.length - 1 && index === 0);
+    
+    // Calculate the transform for smooth sliding
+    let translateX = 0;
+    let scale = 0.75;
+    let opacity = 0.6;
+    let zIndex = 10;
+    
+    if (isCenter) {
+      translateX = 0;
+      scale = 1;
+      opacity = 1;
+      zIndex = 20;
+    } else if (isPrev) {
+      translateX = -320; // Move left
+      scale = 0.75;
+      opacity = 0.6;
+      zIndex = 10;
+    } else if (isNext) {
+      translateX = 320; // Move right
+      scale = 0.75;
+      opacity = 0.6;
+      zIndex = 10;
+    } else {
+      // Hidden templates
+      translateX = position > 0 ? 640 : -640;
+      scale = 0.5;
+      opacity = 0;
+      zIndex = 5;
+    }
+
+    return (
+      <div
+        key={`template-${template.id}`}
+        className="absolute top-1/2 left-1/2 transition-all duration-500 ease-in-out"
+        style={{
+          width: isCenter ? '600px' : '500px',
+          height: isCenter ? '400px' : '350px',
+          transform: `translate(-50%, -50%) translateX(${translateX}px) scale(${scale})`,
+          opacity,
+          zIndex,
+        }}
+      >
+        <div className="bg-white rounded-lg shadow-xl overflow-hidden h-full">
+          {/* Template Title */}
+          {isCenter && (
+            <div className="bg-gray-900 text-white px-6 py-3">
+              <h3 className="text-lg font-semibold">{template.name}</h3>
+              <p className="text-sm text-gray-300">
+                Template {currentIndex + 1} of {designTemplates.length}
+              </p>
+            </div>
+          )}
+
+          {/* Template Content */}
+          <div className="relative h-full">
+            {!iframeErrors[index] ? (
+              <>
+                <iframe
+                  src={template.url}
+                  className="w-full h-full border-0"
+                  title={template.name}
+                  loading="lazy"
+                  onLoad={() => handleIframeLoad(index)}
+                  onError={() => handleIframeError(index)}
+                  sandbox="allow-scripts allow-same-origin"
+                />
+
+                {/* Loading overlay for center card only */}
+                {isCenter && !iframeLoaded[index] && (
+                  <div className="absolute inset-0 bg-gray-100 flex items-center justify-center">
+                    <div className="text-center">
+                      <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900 mx-auto mb-4"></div>
+                      <p className="text-gray-600">
+                        {isAnimating ? "Sliding to template..." : "Loading template..."}
+                      </p>
+                    </div>
+                  </div>
+                )}
+              </>
+            ) : (
+              // Fallback when iframe fails to load
+              <div className="h-full bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center">
+                {isCenter ? (
+                  <div className="text-center p-8">
+                    <ExternalLink size={48} className="mx-auto text-gray-400 mb-4" />
+                    <h4 className="text-xl font-semibold text-gray-700 mb-2">
+                      Preview Not Available
+                    </h4>
+                    <p className="text-gray-600 mb-4">
+                      This template cannot be displayed in a frame due to security restrictions.
+                    </p>
+                    <button
+                      onClick={() => openInNewTab(template.url)}
+                      className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-medium transition-colors duration-200 inline-flex items-center gap-2"
+                    >
+                      <ExternalLink size={16} />
+                      View in New Tab
+                    </button>
+                  </div>
+                ) : (
+                  <div className="text-center p-4">
+                    <ExternalLink size={24} className="mx-auto text-gray-400 mb-2" />
+                    <p className="text-sm text-gray-600">{template.name}</p>
+                  </div>
+                )}
+              </div>
+            )}
+
+            {/* Click overlay for side cards */}
+            {!isCenter && !isAnimating && (isPrev || isNext) && (
+              <div 
+                className="absolute inset-0 bg-black bg-opacity-20 cursor-pointer flex items-center justify-center transition-all duration-200 hover:bg-opacity-30"
+                onClick={() => {
+                  if (isPrev) {
+                    goToPrevious();
+                  } else if (isNext) {
+                    goToNext();
+                  }
+                }}
+              >
+                <div className="bg-white bg-opacity-90 px-4 py-2 rounded-lg transform transition-transform duration-200 hover:scale-105">
+                  <p className="text-sm font-medium text-gray-800">{template.name}</p>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+    );
+  };
+
+  return (
+    <div className="w-full bg-gray-50 py-12">
+      <div className="max-w-7xl mx-auto px-4">
+        {/* Header */}
+        <div className="text-center mb-8">
+          <h2 className="text-3xl font-bold text-gray-900 mb-4">
+            Design Templates
+          </h2>
+          <p className="text-gray-600 max-w-2xl mx-auto">
+            Browse through our collection of professional design templates.
+            Click the arrows to navigate between different designs.
+          </p>
+        </div>
+
+        {/* Carousel Container */}
+        <div className="relative flex items-center justify-center min-h-[500px]">
+          {/* Left Arrow */}
+          <button
+            onClick={goToPrevious}
+            disabled={isAnimating}
+            className={`absolute left-8 z-30 bg-black hover:bg-gray-800 text-white p-4 rounded-full shadow-lg transition-all duration-200 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-gray-400 ${
+              isAnimating ? 'opacity-50 cursor-not-allowed scale-95' : ''
+            }`}
+            aria-label="Previous template"
+          >
+            <ChevronLeft size={24} />
+          </button>
+
+          {/* Template Viewer Container */}
+          <div className="relative w-full h-[450px] overflow-hidden">
+            {getAllTemplates().map((template) =>
+              renderTemplateCard(template, template.index)
+            )}
+          </div>
+
+          {/* Right Arrow */}
+          <button
+            onClick={goToNext}
+            disabled={isAnimating}
+            className={`absolute right-8 z-30 bg-black hover:bg-gray-800 text-white p-4 rounded-full shadow-lg transition-all duration-200 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-gray-400 ${
+              isAnimating ? 'opacity-50 cursor-not-allowed scale-95' : ''
+            }`}
+            aria-label="Next template"
+          >
+            <ChevronRight size={24} />
+          </button>
+        </div>
+
+        {/* Pagination Dots */}
+        <div className="flex justify-center mt-8 space-x-2">
+          {designTemplates.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => {
+                if (!isAnimating && index !== currentIndex) {
+                  setIsAnimating(true);
+                  setTimeout(() => {
+                    setCurrentIndex(index);
+                    setIsAnimating(false);
+                  }, 500);
+                }
+              }}
+              disabled={isAnimating}
+              className={`w-3 h-3 rounded-full transition-all duration-200 ${
+                index === currentIndex
+                  ? "bg-gray-900 scale-125"
+                  : "bg-gray-300 hover:bg-gray-400"
+              } ${isAnimating ? 'opacity-50' : ''}`}
+              aria-label={`Go to template ${index + 1}`}
+            />
+          ))}
+        </div>
+
+        {/* Template Info */}
+        <div className="text-center mt-6">
+          <button
+            onClick={() => openInNewTab(designTemplates[currentIndex].url)}
+            disabled={isAnimating}
+            className={`bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg font-medium transition-colors duration-200 inline-flex items-center gap-2 ${
+              isAnimating ? 'opacity-50 cursor-not-allowed' : ''
+            }`}
+          >
+            <ExternalLink size={16} />
+            View Template
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default DesignSection;
