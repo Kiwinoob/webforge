@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.List; 
+
 import java.util.concurrent.ExecutionException;
 
 @RestController
@@ -33,6 +35,18 @@ public class TemplateController {
             }
         } catch (ExecutionException | InterruptedException e) {
             logger.error("Error retrieving template with ID {}: ", id, e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+    
+      // Get all templates
+    @GetMapping
+    public ResponseEntity<List<Template>> getAllTemplates() {
+        try {
+            List<Template> templates = templateService.getAllTemplates();
+            return ResponseEntity.ok(templates);
+        } catch (ExecutionException | InterruptedException e) {
+            logger.error("Error retrieving all templates: ", e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
