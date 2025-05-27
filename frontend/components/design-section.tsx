@@ -23,7 +23,7 @@ const DesignSection = () => {
     {
       id: 3,
       name: "E-commerce Template",
-      url: "https://example-ecommerce.vercel.app/", // Placeholder, replace if needed
+      url: "https://www.belmacs.com.sg/", // Placeholder, replace if needed
       previewImage: "/preview3.jpg",
       description: "Professional e-commerce template",
     },
