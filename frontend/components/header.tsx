@@ -15,7 +15,7 @@ export function Header() {
   const navItems = [
     { label: "About", href: "#about", sectionId: "about" },
     { label: "Approach", href: "#approach", sectionId: "approach" },
-    { label: "Design", href: "#design", sectionId: "design" },
+    // { label: "Design", href: "#design", sectionId: "design" },
     { label: "Portfolio", href: "#portfolio", sectionId: "portfolio" },
     { label: "Contact Us", href: "#contact", sectionId: "contact" },
   ];
