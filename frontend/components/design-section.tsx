@@ -23,7 +23,7 @@ const DesignSection = () => {
     {
       id: 3,
       name: "E-commerce Template",
-      url: "https://www.belmacs.com.sg/", // Placeholder, replace if needed
+      url: "https://embed.figma.com/proto/Uh0BcNf3MUNU8jgpYXlUnl/Furry-Friends-Prototype?node-id=0-3&p=f&scaling=scale-down-width&content-scaling=fixed&page-id=0%3A1&starting-point-node-id=0%3A3&embed-host=share",
       previewImage: "/preview3.jpg",
       description: "Professional e-commerce template",
     },
@@ -156,6 +156,7 @@ const DesignSection = () => {
 
     let currentCardWidth = isCenter ? cardWidthCenter : cardWidthSide;
     let currentCardHeight = isCenter ? cardHeightCenter : cardHeightSide;
+
     let cardTranslateX = 0;
     let scale = 0.75;
     let opacity = 0.6;
