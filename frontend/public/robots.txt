@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://webforge.com/sitemap.xml
+Sitemap: https://webforge.sg/sitemap.xml
