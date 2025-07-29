@@ -11,11 +11,11 @@ import { constructMetadata } from "@/lib/seo";
 
 // Static metadata for this page
 export const metadata: Metadata = constructMetadata({
-  title: "Webforge | Web Design & Development",
+  title: "Webforge - Professional Website Creation Services",
   description:
-    "Welcome to Webforge, a leading web design and development company that creates stunning and functional websites to help businesses grow.",
+    "Webforge provides professional website creation services tailored to your business needs. From design to deployment, we handle it all.",
   keywords:
-    "Webforge, Web Design, Web Development, UI/UX Design, Graphic Design, Digital Marketing, SEO, Content Writing, Photo Editing",
+    "Webforge,WebforgeSG, Web Design, Web Development, UI/UX Design, Graphic Design, Digital Marketing, SEO, Content Writing, Photo Editing, Custom web design, small business websites,",
   ogType: "website",
 });
 
