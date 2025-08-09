@@ -4,65 +4,26 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 0 0% 23%;
-
-    --card: 0 0% 100%;
-    --card-foreground: 0 0% 23%;
-
-    --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 23%;
-
-    --primary: 16 86% 41%;
-    --primary-foreground: 0 0% 100%;
-
-    --secondary: 30 30% 96%;
-    --secondary-foreground: 0 0% 23%;
-
-    --muted: 30 30% 96%;
-    --muted-foreground: 0 0% 45%;
-
-    --accent: 30 30% 96%;
-    --accent-foreground: 0 0% 23%;
-
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 98%;
-
-    --border: 0 0% 89.8%;
-    --input: 0 0% 89.8%;
-    --ring: 16 86% 41%;
-
-    --radius: 0.5rem;
-  }
-
-  .dark {
-    --background: 0 0% 23%;
+    --background: 210 11% 15%;
     --foreground: 0 0% 98%;
-
-    --card: 0 0% 23%;
+    --card: 210 11% 15%;
     --card-foreground: 0 0% 98%;
-
-    --popover: 0 0% 23%;
+    --popover: 210 11% 15%;
     --popover-foreground: 0 0% 98%;
-
-    --primary: 16 86% 41%;
-    --primary-foreground: 0 0% 100%;
-
-    --secondary: 0 0% 17.5%;
+    --primary: 0 0% 98%;
+    --primary-foreground: 210 11% 15%;
+    --secondary: 210 6% 21%;
     --secondary-foreground: 0 0% 98%;
-
-    --muted: 0 0% 17.5%;
-    --muted-foreground: 0 0% 63.9%;
-
-    --accent: 0 0% 17.5%;
+    --muted: 210 6% 21%;
+    --muted-foreground: 215 13% 65%;
+    --accent: 210 6% 21%;
     --accent-foreground: 0 0% 98%;
-
-    --destructive: 0 62.8% 30.6%;
+    --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 98%;
-
-    --border: 0 0% 29.8%;
-    --input: 0 0% 29.8%;
-    --ring: 16 86% 41%;
+    --border: 210 6% 21%;
+    --input: 210 6% 21%;
+    --ring: 193 68 14; /* #C1440E converted to HSL */
+    --radius: 0.5rem;
   }
 }
 
@@ -75,11 +36,211 @@
   }
 }
 
-html {
-  scroll-behavior: smooth;
-  scroll-padding-top: 80px; /* Adjust based on header height */
+/* Swiss Design Typography */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: 700;
+  letter-spacing: -0.025em;
 }
 
-.grecaptcha-badge {
-  visibility: hidden !important;
+/* Custom scrollbar for dark theme */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-neutral-900;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-neutral-700 rounded-full;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-neutral-600;
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Selection color with brand red */
+::selection {
+  @apply bg-[#C1440E]/30;
+}
+
+/* Focus styles with brand red */
+.focus-visible\:ring-red-600:focus-visible {
+  --tw-ring-color: #c1440e;
+}
+
+/* Swiss Design Grid Lines (subtle) */
+.swiss-grid {
+  background-image: linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+/* Button heat-up animation */
+@keyframes heat-up {
+  from {
+    background-color: rgb(193 68 14);
+  }
+  to {
+    background-color: rgb(154 54 11);
+    box-shadow: 0 0 20px rgba(193, 68, 14, 0.3);
+  }
+}
+
+.btn-heat:hover {
+  animation: heat-up 0.2s ease-out forwards;
+}
+
+/* Form focus states with red accent */
+input:focus,
+textarea:focus,
+select:focus {
+  border-color: #c1440e;
+  box-shadow: 0 0 0 1px #c1440e;
+}
+
+/* Swiss precision lines */
+.precision-line {
+  position: relative;
+}
+
+.precision-line::after {
+  content: "";
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(90deg, #c1440e 0%, transparent 100%);
+}
+
+/* Mathematical spacing utilities */
+.swiss-spacing-1 {
+  margin: 8px;
+}
+.swiss-spacing-2 {
+  margin: 16px;
+}
+.swiss-spacing-3 {
+  margin: 24px;
+}
+.swiss-spacing-4 {
+  margin: 32px;
+}
+.swiss-spacing-5 {
+  margin: 48px;
+}
+.swiss-spacing-6 {
+  margin: 64px;
+}
+
+/* Typography scale following Swiss principles */
+.swiss-text-xs {
+  font-size: 0.75rem;
+  line-height: 1rem;
+}
+.swiss-text-sm {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+}
+.swiss-text-base {
+  font-size: 1rem;
+  line-height: 1.5rem;
+}
+.swiss-text-lg {
+  font-size: 1.125rem;
+  line-height: 1.75rem;
+}
+.swiss-text-xl {
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+}
+.swiss-text-2xl {
+  font-size: 1.5rem;
+  line-height: 2rem;
+}
+.swiss-text-3xl {
+  font-size: 1.875rem;
+  line-height: 2.25rem;
+}
+.swiss-text-4xl {
+  font-size: 2.25rem;
+  line-height: 2.5rem;
+}
+.swiss-text-5xl {
+  font-size: 3rem;
+  line-height: 1;
+}
+.swiss-text-6xl {
+  font-size: 3.75rem;
+  line-height: 1;
+}
+.swiss-text-7xl {
+  font-size: 4.5rem;
+  line-height: 1;
+}
+
+/* Geometric precision elements */
+.geometric-accent {
+  position: relative;
+}
+
+.geometric-accent::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -8px;
+  width: 2px;
+  height: 100%;
+  background-color: #c1440e;
+}
+
+/* Swiss card hover effects */
+.swiss-card {
+  transition: all 0.2s ease;
+}
+
+.swiss-card:hover {
+  border-color: #c1440e;
+  transform: translateY(-1px);
+}
+
+/* Navigation active state */
+.nav-active {
+  position: relative;
+}
+
+.nav-active::after {
+  content: "";
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background-color: #c1440e;
+}
+
+/* Loading animation for precision machinery feel */
+@keyframes precision-load {
+  0% {
+    transform: scaleX(0);
+  }
+  100% {
+    transform: scaleX(1);
+  }
+}
+
+.precision-loader {
+  animation: precision-load 0.3s ease-out;
+  transform-origin: left;
 }

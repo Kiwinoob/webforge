@@ -12,10 +12,11 @@ type SEOProps = {
 };
 
 export function constructMetadata({
-  title = "Webforge - Professional Website Creation Services",
+  title = "Webforge | Professional Website Creation Services",
   description = "Webforge provides professional website creation services tailored to your business needs. From design to deployment, we handle it all.",
   keywords = "Webforge,WebforgeSG, Web Design, Web Development, UI/UX Design, Graphic Design, Digital Marketing, SEO, Content Writing, Photo Editing, Custom web design, small business websites,",
-  ogImage = "/og-webforge.png",
+  ogImage = "/webforge-og.png",
+
   ogType = "website",
   twitterCard = "summary_large_image",
 }: SEOProps = {}): Metadata {
@@ -32,7 +33,7 @@ export function constructMetadata({
       title,
       description,
       url: `${baseUrl}${pathname}`,
-      siteName: "Webforge | Web Design & Development",
+      siteName: "Webforge | Professional Website Creation Services",
       images: [
         {
           url: ogImage.startsWith("http") ? ogImage : `${baseUrl}${ogImage}`,

@@ -1,21 +1,50 @@
-import Link from "next/link"
+import Image from "next/image";
+import React from "react";
 
-export function Footer() {
+export default function Footer() {
+  const currentYear = new Date().getFullYear();
+
   return (
-    <footer className="w-full border-t py-6 md:py-0">
-      <div className="container flex flex-col items-center justify-between gap-4 md:h-24 md:flex-row">
-        <p className="text-center text-sm leading-loose text-muted-foreground md:text-left">
-          © {new Date().getFullYear()} Webforge. All rights reserved.
-        </p>
-        <div className="flex gap-4">
-          {/* <Link href="#" className="text-sm text-muted-foreground underline-offset-4 hover:underline">
-            Terms
-          </Link>
-          <Link href="#" className="text-sm text-muted-foreground underline-offset-4 hover:underline">
-            Privacy
-          </Link> */}
+    <footer className="border-t border-neutral-800 py-12 sm:py-16 bg-neutral-950">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6">
+        {/* Main Content - Single Column Layout */}
+        <div className="space-y-8">
+          {/* Brand Section */}
+          <div className="space-y-6">
+            <div className="flex items-center space-x-3">
+              <Image
+                src="/webforge-logo.png"
+                alt="logo"
+                width={200}
+                height={30}
+              />
+            </div>
+
+            <div className="max-w-md">
+              <p className="text-neutral-400 leading-relaxed text-sm sm:text-base">
+                Crafting digital excellence for Singapore's growing businesses.
+                Founded by students, built for success.
+              </p>
+            </div>
+
+            <div className="space-y-2 text-sm text-neutral-500">
+              <div>Singapore-based team</div>
+              <div className="hover:text-neutral-300 transition-colors">
+                webforgesg@gmail.com
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Bottom Section */}
+        <div className="border-t border-neutral-800 mt-12 pt-8">
+          <div className="flex flex-col space-y-4 sm:space-y-2">
+            <div className="text-neutral-500 text-sm">
+              © {currentYear} WebForge. All rights reserved.
+            </div>
+          </div>
         </div>
       </div>
     </footer>
-  )
+  );
 }
