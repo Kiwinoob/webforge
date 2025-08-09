@@ -113,7 +113,7 @@ export default function PortfolioPage() {
         title="Ready to engineer your success story?"
         description="Let's discuss your technical requirements and create a custom solution that delivers measurable results."
         buttonText="Contact Us"
-        buttonLink="/get-started"
+        buttonLink="/contact"
         highlightWord="success story?"
         features="Custom solutions • No templates • Guaranteed performance"
       />
