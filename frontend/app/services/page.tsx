@@ -27,7 +27,7 @@ export default function ServicesPage() {
         title="Ready to bring your business online?"
         description="Let's discuss your project and create a custom solution that delivers real results for your business."
         buttonText="Contact Us"
-        buttonLink="/get-started"
+        buttonLink="/contact"
         highlightWord="online?"
         features="Free consultation • Custom proposal • Quotation"
       />

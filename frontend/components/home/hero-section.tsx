@@ -2,6 +2,7 @@ import React from "react";
 import { Button } from "@/components/ui/button";
 import { ArrowUpRight } from "lucide-react";
 import FadeIn from "../common/fade-in";
+import Link from "next/link";
 
 // A small component for the statistics on the left side.
 function StatItem({ value, label }: { value: string; label: string }) {
@@ -55,10 +56,12 @@ export default function HeroSection() {
             {/* CTA row */}
             <FadeIn direction="up" distance={20} duration={0.5} delay={0.36}>
               <div className="mt-6 sm:mt-8 lg:mt-10 flex flex-col sm:flex-row items-start sm:items-center gap-4 lg:gap-6">
-                <Button className="bg-[#C1440E] hover:bg-red-800 text-white px-6 sm:px-5 py-3 sm:py-6 font-semibold text-sm sm:text-base w-full sm:w-auto">
-                  Contact Us
-                  <ArrowUpRight className="ml-2 h-4 w-4 sm:h-5 sm:w-5" />
-                </Button>
+                <Link href="/contact">
+                  <Button className="bg-[#C1440E] hover:bg-red-800 text-white px-6 sm:px-5 py-3 sm:py-6 font-semibold text-sm sm:text-base w-full sm:w-auto">
+                    Contact Us
+                    <ArrowUpRight className="ml-2 h-4 w-4 sm:h-5 sm:w-5" />
+                  </Button>
+                </Link>
                 <span className="text-xs sm:text-sm text-neutral-400 text-center sm:text-left">
                   Free initial consultation • 24h response guaranteed
                 </span>
