@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/project")
 @CrossOrigin(origins = "*") // CORS configuration for localhost
 public class ProjectController {
 
@@ -21,7 +20,7 @@ public class ProjectController {
       this.projectService = projectService;
   }
 
-  @GetMapping
+  @GetMapping("/project/get")
     public ResponseEntity<List<Project>> getAllProjects() {
         try {
             return new ResponseEntity<>(projectService.getAllProjects(), HttpStatus.OK);
