@@ -31,7 +31,7 @@ public class ConceptProject {
         return this.hoverImage;
     }
 
-    public String imageAlt() {
+    public String getImageAlt() {
         return this.imageAlt; 
     }
 
