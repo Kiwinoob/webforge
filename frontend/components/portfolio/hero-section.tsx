@@ -11,9 +11,7 @@ export default function HeroSection() {
 
   const industries = [
     "Engineering",
-    "Professional Services", 
-    "Food & Beverages",
-    "Healthcare"
+    "Interior Design", 
   ];
 
   return (
