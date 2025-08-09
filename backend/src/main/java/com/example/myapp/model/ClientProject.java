@@ -1,7 +1,7 @@
 package com.example.myapp.model;
 
 public class ClientProject {
-    private String order;
+    private Integer id;
     private String title; 
     private String subtitle;
     private String description;
@@ -15,8 +15,8 @@ public class ClientProject {
     private String url;
 
     // Getters
-    public String getOrder() {
-        return this.order;
+    public Integer getId() {
+        return this.id;
     }
 
     public String getTitle() {
