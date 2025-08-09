@@ -4,6 +4,7 @@ import { Badge } from "@/components/ui/badge";
 import FadeIn from "@/components/common/fade-in";
 
 export default function HeroSection() {
+
   const stats = [
     { number: "2", label: "Projects" },
     { number: "3", label: "Concepts" }

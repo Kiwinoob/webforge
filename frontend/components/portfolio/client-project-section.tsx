@@ -5,10 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import FadeIn from "../common/fade-in";
 
 interface ClientProjectProps {
-  badge: {
-    text: string;
-    color?: string;
-  };
+  badge: string; 
   title: string;
   subtitle: string;
   description: string;
@@ -17,8 +14,8 @@ interface ClientProjectProps {
   defaultImage: string;
   hoverImage: string;
   imageAlt: string;
-  imagePosition?: "left" | "right";
-  siteUrl: string;
+  imagePosition: string;
+  url: string;
 }
 
 export default function ClientProjectSection({
@@ -32,9 +29,9 @@ export default function ClientProjectSection({
   hoverImage,
   imageAlt,
   imagePosition = "right",
-  siteUrl,
+  url,
 }: ClientProjectProps) {
-  const badgeColor = badge.color || "#C1440E";
+
 
   // State for image hover
   const [isImageHovered, setIsImageHovered] = useState(false);
@@ -108,14 +105,14 @@ export default function ClientProjectSection({
   }, []);
 
   const handleImageClick = useCallback(() => {
-    if (siteUrl) {
-      window.open(siteUrl, '_blank', 'noopener,noreferrer');
+    if (url) {
+      window.open(url, '_blank', 'noopener,noreferrer');
     }
-  }, [siteUrl]);
+  }, [url]);
 
   useEffect(() => {
     if (pillRef.current) {
-      pillRef.current.style.backgroundColor = badgeColor;
+      pillRef.current.style.backgroundColor = "#C1440E";
       pillRef.current.style.left = "0px";
       pillRef.current.style.top = "0px";
       pillRef.current.style.visibility = "hidden"; // Initial state
@@ -126,7 +123,7 @@ export default function ClientProjectSection({
         cancelAnimationFrame(animationRef.current);
       }
     };
-  }, [badgeColor]);
+  }, ["#C1440E"]);
 
   const ContentSection = ({ isMobile = false }) => (
     <div className={isMobile ? "" : "col-span-5"}>
@@ -134,21 +131,21 @@ export default function ClientProjectSection({
         <div className="space-y-4 sm:space-y-6">
           <Badge
             className="text-white rounded-none text-xs"
-            style={{ backgroundColor: badgeColor }}
+            style={{ backgroundColor: "#C1440E" }}
           >
-            {badge.text}
+            {badge}
           </Badge>
           <div className="space-y-2">
             <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white">{title}</h2>
             <h3
               className="text-2xl sm:text-3xl lg:text-4xl font-bold pb-2 sm:pb-4"
-              style={{ color: badgeColor }}
+              style={{ color: "#C1440E" }}
             >
               {subtitle}
             </h3>
             <div
               className="w-16 sm:w-24 h-1"
-              style={{ backgroundColor: badgeColor }}
+              style={{ backgroundColor: "#C1440E" }}
             ></div>
           </div>
         </div>
@@ -185,7 +182,7 @@ export default function ClientProjectSection({
       <div
         className="aspect-[4/3] bg-neutral-900 border border-neutral-800 relative overflow-hidden cursor-pointer transition-all duration-300 group"
         style={{
-          borderColor: isImageHovered ? badgeColor : "",
+          borderColor: isImageHovered ? "#C1440E" : "",
         }}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
