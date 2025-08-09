@@ -2,6 +2,7 @@
 
 import { useState, useRef, useCallback, useEffect } from "react";
 import { Badge } from "@/components/ui/badge";
+import FadeIn from "../common/fade-in";
 
 interface ClientProjectProps {
   badge: {
@@ -219,36 +220,41 @@ export default function ClientProjectSection({
 
   return (
     <>
-      <section className="py-12 sm:py-16 lg:py-24">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          {/* Mobile Layout */}
-          <div className="block lg:hidden">
-            <div className="space-y-8">
-              {/* Image always on top for mobile */}
-              <ImageSection isMobile={true} />
-              {/* Content always below for mobile */}
-              <ContentSection isMobile={true} />
-            </div>
-          </div>
-
-          {/* Desktop Layout (Large screens and up) */}
-          <div className="hidden lg:block">
-            <div className="grid grid-cols-12 gap-6 xl:gap-8">
-              {imagePosition === "left" ? (
-                <>
-                  <ImageSection />
-                  <ContentSection />
-                </>
-              ) : (
-                <>
-                  <ContentSection />
-                  <ImageSection />
-                </>
-              )}
-            </div>
-          </div>
+<section className="py-12 sm:py-16 lg:py-24">
+  <div className="max-w-7xl mx-auto px-4 sm:px-6">
+    {/* Mobile Layout */}
+    <div className="block lg:hidden">
+      <FadeIn direction="up" distance={24} duration={0.6}>
+        <div className="space-y-8">
+          {/* Image always on top for mobile */}
+          <ImageSection isMobile={true} />
+          {/* Content always below for mobile */}
+          <ContentSection isMobile={true} />
         </div>
-      </section>
+      </FadeIn>
+    </div>
+
+    {/* Desktop Layout (Large screens and up) */}
+    <div className="hidden lg:block">
+      <FadeIn direction="up" distance={24} duration={0.6}>
+        <div className="grid grid-cols-12 gap-6 xl:gap-8">
+          {imagePosition === "left" ? (
+            <>
+              <ImageSection />
+              <ContentSection />
+            </>
+          ) : (
+            <>
+              <ContentSection />
+              <ImageSection />
+            </>
+          )}
+        </div>
+      </FadeIn>
+    </div>
+  </div>
+</section>
+
 
       {/* Cursor following pill - Only show on desktop */}
       <div

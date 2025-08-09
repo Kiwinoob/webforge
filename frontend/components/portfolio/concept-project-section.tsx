@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useState, useRef, useCallback, useEffect } from "react";
+import FadeIn from "../common/fade-in";
 
 interface ConceptCard {
   title: string;
@@ -115,110 +116,31 @@ export default function ConceptProjectSection({
           <div className="space-y-8">
             {/* Header */}
             <div className="space-y-4">
-              <div className="text-sm text-neutral-400 uppercase tracking-wider">
-                Concept Archive
+              <FadeIn direction="up" distance={16} duration={0.5}>
+                <div className="text-sm text-neutral-400 uppercase tracking-wider">
+                  Concept Archive
+                </div>
+              </FadeIn>
+
+              <div className="text-3xl sm:text-4xl font-bold text-white leading-tight">
+                <FadeIn direction="up" distance={24} duration={0.6} delay={0.1}>
+                  <span className="block leading-tight">{title}</span>
+                </FadeIn>
+                <FadeIn direction="up" distance={24} duration={0.6} delay={0.2}>
+                  <span className="block leading-tight" style={{ color: accentColor }}>{subtitle}</span>
+                </FadeIn>
               </div>
-              <h2 className="text-3xl sm:text-4xl font-bold text-white leading-tight">
-                {title}
-                <br />
-                <span style={{ color: accentColor }}>{subtitle}</span>
-              </h2>
-              <p className="text-sm sm:text-base text-neutral-400 leading-relaxed">{description}</p>
+
+              <FadeIn direction="up" distance={20} duration={0.5} delay={0.3}>
+                <p className="text-sm sm:text-base text-neutral-400 leading-relaxed">{description}</p>
+              </FadeIn>
             </div>
 
             {/* Concept Cards - Mobile 2-Column Grid */}
             <div className="grid grid-cols-2 gap-4 sm:gap-6">
               {concepts.map((concept, index) => (
-                <div
-                  key={index}
-                  className="bg-neutral-900 border border-neutral-800 overflow-hidden group transition-all cursor-pointer hover:shadow-xl hover:-translate-y-1"
-                  style={
-                    {
-                      "--hover-border-color": accentColor,
-                    } as React.CSSProperties & {
-                      "--hover-border-color": string;
-                    }
-                  }
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.borderColor = accentColor;
-                    handleCardEnter(index, e);
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.borderColor = "";
-                    handleCardLeave();
-                  }}
-                  onMouseMove={handleMouseMove}
-                  onClick={() =>
-                    concept.siteUrl && window.open(concept.siteUrl, "_blank")
-                  }
-                >
-                  <div className="aspect-[4/3] relative overflow-hidden">
-                    {/* Placeholder grid pattern */}
-                    <div className="absolute inset-0 opacity-10">
-                      <div className="grid grid-cols-12 gap-1 sm:gap-2 h-full p-2 sm:p-4">
-                        {Array.from({ length: 144 }).map((_, i) => (
-                          <div key={i} className="bg-white/20 rounded-sm"></div>
-                        ))}
-                      </div>
-                    </div>
-
-                    {/* Default image */}
-                    <Image
-                      src={concept.image}
-                      alt={concept.imageAlt}
-                      width={400}
-                      height={300}
-                      className="w-full h-full object-cover opacity-80 transition-opacity duration-300 group-hover:opacity-0"
-                    />
-
-                    {/* Hover image */}
-                    <Image
-                      src={concept.hoverImage}
-                      alt={concept.imageAlt}
-                      width={400}
-                      height={300}
-                      className="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-300 group-hover:opacity-100"
-                    />
-                  </div>
-                  <div className="p-3 sm:p-4 space-y-3 sm:space-y-4">
-                    <div className="space-y-1 sm:space-y-2">
-                      <h3 className="text-sm sm:text-lg font-bold text-white group-hover:opacity-80 transition-opacity leading-tight">
-                        {concept.title}
-                      </h3>
-                      <p className="text-xs sm:text-sm text-neutral-400 leading-relaxed">{concept.description}</p>
-                    </div>
-                    <div className="text-xs text-neutral-500 uppercase tracking-wider">
-                      {concept.tags}
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-
-        {/* Desktop Layout (Large screens and up) */}
-        <div className="hidden lg:block">
-          <div className="grid grid-cols-12 gap-6">
-            <div className="col-span-3">
-              <div className="space-y-4">
-                <div className="text-sm text-neutral-400 uppercase tracking-wider">
-                  Concept Archive
-                </div>
-                <h2 className="text-3xl xl:text-4xl font-bold text-white leading-tight">
-                  {title}
-                  <br />
-                  <span style={{ color: accentColor }}>{subtitle}</span>
-                </h2>
-                <p className="text-neutral-400 leading-relaxed">{description}</p>
-              </div>
-            </div>
-
-            <div className="col-span-9">
-              <div className="grid grid-cols-2 gap-6 xl:gap-8">
-                {concepts.map((concept, index) => (
+                <FadeIn key={index} direction="up" distance={20} duration={0.5} delay={0.4 + (index * 0.05)}>
                   <div
-                    key={index}
                     className="bg-neutral-900 border border-neutral-800 overflow-hidden group transition-all cursor-pointer hover:shadow-xl hover:-translate-y-1"
                     style={
                       {
@@ -243,7 +165,7 @@ export default function ConceptProjectSection({
                     <div className="aspect-[4/3] relative overflow-hidden">
                       {/* Placeholder grid pattern */}
                       <div className="absolute inset-0 opacity-10">
-                        <div className="grid grid-cols-12 gap-2 h-full p-4">
+                        <div className="grid grid-cols-12 gap-1 sm:gap-2 h-full p-2 sm:p-4">
                           {Array.from({ length: 144 }).map((_, i) => (
                             <div key={i} className="bg-white/20 rounded-sm"></div>
                           ))}
@@ -268,18 +190,117 @@ export default function ConceptProjectSection({
                         className="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-300 group-hover:opacity-100"
                       />
                     </div>
-                    <div className="p-6 space-y-4">
-                      <div className="space-y-2">
-                        <h3 className="text-xl font-bold text-white group-hover:opacity-80 transition-opacity">
+                    <div className="p-3 sm:p-4 space-y-3 sm:space-y-4">
+                      <div className="space-y-1 sm:space-y-2">
+                        <h3 className="text-sm sm:text-lg font-bold text-white group-hover:opacity-80 transition-opacity leading-tight">
                           {concept.title}
                         </h3>
-                        <p className="text-neutral-400">{concept.description}</p>
+                        <p className="text-xs sm:text-sm text-neutral-400 leading-relaxed">{concept.description}</p>
                       </div>
-                      <div className="text-sm text-neutral-500 uppercase tracking-wider">
+                      <div className="text-xs text-neutral-500 uppercase tracking-wider">
                         {concept.tags}
                       </div>
                     </div>
                   </div>
+                </FadeIn>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Desktop Layout (Large screens and up) */}
+        <div className="hidden lg:block">
+          <div className="grid grid-cols-12 gap-6">
+            <div className="col-span-3">
+              <div className="space-y-4">
+                <FadeIn direction="left" distance={24} duration={0.5}>
+                  <div className="text-sm text-neutral-400 uppercase tracking-wider">
+                    Concept Archive
+                  </div>
+                </FadeIn>
+
+                <div className="text-3xl xl:text-4xl font-bold text-white leading-tight">
+                  <FadeIn direction="left" distance={24} duration={0.6} delay={0.1}>
+                    <span className="block leading-tight">{title}</span>
+                  </FadeIn>
+                  <FadeIn direction="left" distance={24} duration={0.6} delay={0.2}>
+                    <span className="block leading-tight" style={{ color: accentColor }}>{subtitle}</span>
+                  </FadeIn>
+                </div>
+
+                <FadeIn direction="left" distance={20} duration={0.5} delay={0.3}>
+                  <p className="text-neutral-400 leading-relaxed">{description}</p>
+                </FadeIn>
+              </div>
+            </div>
+
+            <div className="col-span-9">
+              <div className="grid grid-cols-2 gap-6 xl:gap-8">
+                {concepts.map((concept, index) => (
+                  <FadeIn key={index} direction="up" distance={24} duration={0.6} delay={0.2 + (index * 0.08)}>
+                    <div
+                      className="bg-neutral-900 border border-neutral-800 overflow-hidden group transition-all cursor-pointer hover:shadow-xl hover:-translate-y-1"
+                      style={
+                        {
+                          "--hover-border-color": accentColor,
+                        } as React.CSSProperties & {
+                          "--hover-border-color": string;
+                        }
+                      }
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.borderColor = accentColor;
+                        handleCardEnter(index, e);
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.borderColor = "";
+                        handleCardLeave();
+                      }}
+                      onMouseMove={handleMouseMove}
+                      onClick={() =>
+                        concept.siteUrl && window.open(concept.siteUrl, "_blank")
+                      }
+                    >
+                      <div className="aspect-[4/3] relative overflow-hidden">
+                        {/* Placeholder grid pattern */}
+                        <div className="absolute inset-0 opacity-10">
+                          <div className="grid grid-cols-12 gap-2 h-full p-4">
+                            {Array.from({ length: 144 }).map((_, i) => (
+                              <div key={i} className="bg-white/20 rounded-sm"></div>
+                            ))}
+                          </div>
+                        </div>
+
+                        {/* Default image */}
+                        <Image
+                          src={concept.image}
+                          alt={concept.imageAlt}
+                          width={400}
+                          height={300}
+                          className="w-full h-full object-cover opacity-80 transition-opacity duration-300 group-hover:opacity-0"
+                        />
+
+                        {/* Hover image */}
+                        <Image
+                          src={concept.hoverImage}
+                          alt={concept.imageAlt}
+                          width={400}
+                          height={300}
+                          className="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+                        />
+                      </div>
+                      <div className="p-6 space-y-4">
+                        <div className="space-y-2">
+                          <h3 className="text-xl font-bold text-white group-hover:opacity-80 transition-opacity">
+                            {concept.title}
+                          </h3>
+                          <p className="text-neutral-400">{concept.description}</p>
+                        </div>
+                        <div className="text-sm text-neutral-500 uppercase tracking-wider">
+                          {concept.tags}
+                        </div>
+                      </div>
+                    </div>
+                  </FadeIn>
                 ))}
               </div>
             </div>
