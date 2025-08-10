@@ -24,7 +24,7 @@ export const metadata: Metadata = constructMetadata({
 // Function to fetch Client Projects
 async function fetchClientProjects(): Promise<ClientProject[]> {
   try {
-    const res = await fetch("http://localhost:8080/clientproject/get", {
+    const res = await fetch("http://54.251.165.197:8080/clientproject/get", {
       cache: "no-store",
       signal: AbortSignal.timeout(5000),
     });
@@ -42,7 +42,7 @@ async function fetchClientProjects(): Promise<ClientProject[]> {
 // Function to fetch concept projects 
 async function fetchConceptProjects(): Promise<ConceptProject[]> {
   try {
-    const res = await fetch("http://localhost:8080/conceptproject/get", {
+    const res = await fetch("http://54.251.165.197:8080/conceptproject/get", {
       cache: "no-store",
       signal: AbortSignal.timeout(5000),
     });
@@ -60,7 +60,7 @@ async function fetchConceptProjects(): Promise<ConceptProject[]> {
 // Function to fetch testimonials 
 async function fetchTestimonials(): Promise<Testimonial[]> {
   try {
-    const res = await fetch("http://localhost:8080/testimonial/get", {
+    const res = await fetch("http://54.251.165.197:8080/testimonial/get", {
       cache: "no-store",
       signal: AbortSignal.timeout(5000),
     });
