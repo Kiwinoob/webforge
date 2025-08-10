@@ -177,8 +177,7 @@ export default function ConceptProjectSection({
                       <Image
                         alt={concept.imageAlt}
                         src={concept.defaultImage}
-                        width={400}
-                        height={300}
+                        fill
                         className="w-full h-full object-cover opacity-80 transition-opacity duration-300 group-hover:opacity-0"
                       />
 
@@ -186,8 +185,7 @@ export default function ConceptProjectSection({
                       <Image
                         src={concept.hoverImage}
                         alt={concept.imageAlt}
-                        width={400}
-                        height={300}
+                        fill
                         className="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-300 group-hover:opacity-100"
                       />
                     </div>
