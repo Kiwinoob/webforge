@@ -4,6 +4,8 @@ import "./globals.css";
 import Navbar from "@/components/navbar";
 import Footer from "@/components/footer";
 import { Toaster } from "@/components/ui/sonner";
+import { usePathname } from "next/navigation";
+import Head from "next/head";
 
 const inter = Inter({ subsets: ["latin"] });
 
