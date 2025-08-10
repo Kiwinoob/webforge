@@ -7,6 +7,10 @@ import { Toaster } from "@/components/ui/sonner";
 
 const inter = Inter({ subsets: ["latin"] });
 
+const pathname = usePathname();
+const baseUrl = "https://webforge.sg";
+const canonical = pathname === "/" ? baseUrl : `${baseUrl}${pathname}`;
+
 export default function RootLayout({
   children,
 }: {
@@ -14,6 +18,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" color="dark">
+      <Head>
+        <link rel="canonical" href={canonical} />
+      </Head>
       <body className={inter.className}>
         <Navbar />
         {children}
