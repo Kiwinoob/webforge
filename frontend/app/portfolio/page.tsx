@@ -21,13 +21,11 @@ export const metadata: Metadata = constructMetadata({
   ogType: "website",
 });
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL;
-
 // Function to fetch Client Projects
 async function fetchClientProjects(): Promise<ClientProject[]> {
   try {
-    const res = await fetch(`${API_BASE_URL}/clientproject/get`, {
-      next: { revalidate: 3600 },
+    const res = await fetch("http://54.251.165.197:8080/clientproject/get", {
+      cache: "no-store",
       signal: AbortSignal.timeout(5000),
     });
 
@@ -44,8 +42,8 @@ async function fetchClientProjects(): Promise<ClientProject[]> {
 // Function to fetch concept projects
 async function fetchConceptProjects(): Promise<ConceptProject[]> {
   try {
-    const res = await fetch(`${API_BASE_URL}/conceptproject/get`, {
-      next: { revalidate: 3600 },
+    const res = await fetch("http://54.251.165.197:8080/conceptproject/get", {
+      cache: "no-store",
       signal: AbortSignal.timeout(5000),
     });
 
@@ -63,7 +61,7 @@ async function fetchConceptProjects(): Promise<ConceptProject[]> {
 async function fetchTestimonials(): Promise<Testimonial[]> {
   try {
     const res = await fetch("http://54.251.165.197:8080/testimonial/get", {
-      next: { revalidate: 3600 },
+      cache: "no-store",
       signal: AbortSignal.timeout(5000),
     });
 
