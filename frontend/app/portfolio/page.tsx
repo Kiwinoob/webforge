@@ -1,16 +1,52 @@
-import HeroSection from "../../components/portfolio/hero-section";
-import ClientProjectSection from "../../components/portfolio/client-project-section";
-import ConceptProjectSection from "../../components/portfolio/concept-project-section";
-import ClientTestimonialSection from "../../components/portfolio/client-testimonial-section";
-import CTASection from "../../components/common/cta-section";
+import { Suspense } from "react";
+import dynamic from "next/dynamic";
 import { Metadata } from "next";
 import { constructMetadata } from "@/lib/seo";
-import { Suspense } from "react";
 
 // Import datatypes
 import { ClientProject } from "../../types/client-project";
 import { ConceptProject } from "../../types/concept-project";
 import { Testimonial } from "../../types/testimonial";
+
+// Static imports for critical components
+import HeroSection from "../../components/portfolio/hero-section";
+
+// Dynamic imports for non-critical components
+const ClientProjectSection = dynamic(
+  () => import("../../components/portfolio/client-project-section"),
+  {
+    loading: () => (
+      <div className="h-96 bg-neutral-900 animate-pulse rounded-lg" />
+    ),
+  }
+);
+
+const ConceptProjectSection = dynamic(
+  () => import("../../components/portfolio/concept-project-section"),
+  {
+    loading: () => (
+      <div className="h-96 bg-neutral-900 animate-pulse rounded-lg" />
+    ),
+  }
+);
+
+const ClientTestimonialSection = dynamic(
+  () => import("../../components/portfolio/client-testimonial-section"),
+  {
+    loading: () => (
+      <div className="h-64 bg-neutral-900 animate-pulse rounded-lg" />
+    ),
+  }
+);
+
+const CTASection = dynamic(
+  () => import("../../components/common/cta-section"),
+  {
+    loading: () => (
+      <div className="h-48 bg-neutral-900 animate-pulse rounded-lg" />
+    ),
+  }
+);
 
 export const metadata: Metadata = constructMetadata({
   title: "WebForge | Portfolio",
@@ -21,24 +57,26 @@ export const metadata: Metadata = constructMetadata({
   ogType: "website",
 });
 
-// Optimized API configuration
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL;
-const FETCH_TIMEOUT = 3000; // Reduced from 5000ms
-const CACHE_DURATION = 3600; // 5 minutes
 
-// Enhanced fetch function with better error handling and caching
-async function fetchWithRetry<T>(url: string, retries = 2): Promise<T[]> {
-  for (let i = 0; i <= retries; i++) {
+// Enhanced fetch function with better error handling and retry logic
+async function fetchWithRetry<T>(
+  url: string,
+  options: RequestInit = {},
+  retries = 2
+): Promise<T[]> {
+  for (let attempt = 0; attempt <= retries; attempt++) {
     try {
       const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), FETCH_TIMEOUT);
+      const timeoutId = setTimeout(() => controller.abort(), 5000);
 
       const res = await fetch(url, {
-        next: { revalidate: CACHE_DURATION }, // ISR instead of no-store
+        ...options,
         signal: controller.signal,
         headers: {
           Accept: "application/json",
-          "Cache-Control": "max-age=3600", // Browser cache
+          "Content-Type": "application/json",
+          ...options.headers,
         },
       });
 
@@ -55,37 +93,53 @@ async function fetchWithRetry<T>(url: string, retries = 2): Promise<T[]> {
       );
       return data;
     } catch (error) {
-      console.warn(`Attempt ${i + 1} failed for ${url}:`, error);
-
-      if (i === retries) {
-        console.error(`All retry attempts failed for ${url}:`, error);
-        return []; // Return empty array as fallback
+      if (attempt === retries) {
+        console.error(
+          `Failed to fetch from ${url} after ${retries + 1} attempts:`,
+          error
+        );
+        return [];
       }
 
       // Exponential backoff
-      await new Promise((resolve) =>
-        setTimeout(resolve, Math.pow(2, i) * 1000)
-      );
+      const delay = Math.pow(2, attempt) * 1000;
+      await new Promise((resolve) => setTimeout(resolve, delay));
     }
   }
+
   return [];
 }
 
-// Parallel fetch functions with better error handling
+// Optimized fetch functions with caching and revalidation
 async function fetchClientProjects(): Promise<ClientProject[]> {
-  return fetchWithRetry<ClientProject>(`${API_BASE_URL}/clientproject/get`);
+  return fetchWithRetry<ClientProject>(`${API_BASE_URL}/clientproject/get`, {
+    next: {
+      revalidate: 3600,
+      tags: ["client-projects"],
+    },
+  });
 }
 
 async function fetchConceptProjects(): Promise<ConceptProject[]> {
-  return fetchWithRetry<ConceptProject>(`${API_BASE_URL}/conceptproject/get`);
+  return fetchWithRetry<ConceptProject>(`${API_BASE_URL}/conceptproject/get`, {
+    next: {
+      revalidate: 3600, // Cache for 1 hour (concept projects change less frequently)
+      tags: ["concept-projects"],
+    },
+  });
 }
 
 async function fetchTestimonials(): Promise<Testimonial[]> {
-  return fetchWithRetry<Testimonial>(`${API_BASE_URL}/testimonial/get`);
+  return fetchWithRetry<Testimonial>(`${API_BASE_URL}/testimonial/get`, {
+    next: {
+      revalidate: 1800, // Cache for 30 minutes
+      tags: ["testimonials"],
+    },
+  });
 }
 
-// Static fallback data for better UX during failures
-const fallbackConcepts: ConceptProject[] = [
+// Static fallback data for better resilience
+const FALLBACK_CONCEPTS: ConceptProject[] = [
   {
     id: 1,
     title: "Dragon's Den",
@@ -121,7 +175,7 @@ const fallbackConcepts: ConceptProject[] = [
   },
 ];
 
-const fallbackTestimonials: Testimonial[] = [
+const FALLBACK_TESTIMONIALS: Testimonial[] = [
   {
     id: 1,
     quote:
@@ -140,31 +194,24 @@ const fallbackTestimonials: Testimonial[] = [
   },
 ];
 
-// Loading components for better UX
-function ProjectsLoading() {
+// Loading component for better UX
+function PortfolioSkeleton() {
   return (
-    <div className="animate-pulse space-y-8 p-8">
+    <div className="space-y-8 p-8">
       {[...Array(3)].map((_, i) => (
-        <div key={i} className="flex space-x-4">
-          <div className="bg-gray-800 h-64 w-96 rounded"></div>
-          <div className="flex-1 space-y-2">
-            <div className="bg-gray-800 h-4 w-3/4 rounded"></div>
-            <div className="bg-gray-800 h-4 w-1/2 rounded"></div>
-            <div className="bg-gray-800 h-20 w-full rounded"></div>
-          </div>
-        </div>
+        <div key={i} className="h-96 bg-neutral-900 animate-pulse rounded-lg" />
       ))}
     </div>
   );
 }
 
-// Separate components for better code splitting
-async function ClientProjectsSection() {
-  const clientProjects = await fetchClientProjects();
+// Separate client projects component for better code splitting
+function ClientProjects({ projects }: { projects: ClientProject[] }) {
+  if (projects.length === 0) return null;
 
   return (
     <>
-      {clientProjects.map((clientProject) => (
+      {projects.map((clientProject) => (
         <ClientProjectSection
           key={clientProject.id}
           badge={clientProject.badge}
@@ -184,47 +231,72 @@ async function ClientProjectsSection() {
   );
 }
 
-async function ConceptProjectsSection() {
-  const conceptProjects = await fetchConceptProjects();
-  const projects =
-    conceptProjects.length > 0 ? conceptProjects : fallbackConcepts;
+export default async function PortfolioPage() {
+  // Fetch data with parallel requests and fallbacks
+  const [clientProjects, conceptProjects, testimonials] =
+    await Promise.allSettled([
+      fetchClientProjects(),
+      fetchConceptProjects(),
+      fetchTestimonials(),
+    ]);
 
-  return <ConceptProjectSection concepts={projects} />;
-}
+  // Extract successful results with fallbacks
+  const clientProjectsData =
+    clientProjects.status === "fulfilled" ? clientProjects.value : [];
+  const conceptProjectsData =
+    conceptProjects.status === "fulfilled"
+      ? conceptProjects.value.length > 0
+        ? conceptProjects.value
+        : FALLBACK_CONCEPTS
+      : FALLBACK_CONCEPTS;
+  const testimonialsData =
+    testimonials.status === "fulfilled"
+      ? testimonials.value.length > 0
+        ? testimonials.value
+        : FALLBACK_TESTIMONIALS
+      : FALLBACK_TESTIMONIALS;
 
-async function TestimonialsSection() {
-  const testimonials = await fetchTestimonials();
-  const testimonialsToShow =
-    testimonials.length > 0 ? testimonials : fallbackTestimonials;
-
-  return <ClientTestimonialSection testimonials={testimonialsToShow} />;
-}
-
-export default function PortfolioPage() {
   return (
     <div className="min-h-screen bg-neutral-950">
+      {/* Critical above-the-fold content loads immediately */}
       <HeroSection />
 
-      <Suspense fallback={<ProjectsLoading />}>
-        <ClientProjectsSection />
+      {/* Client projects with suspense boundary */}
+      <Suspense fallback={<PortfolioSkeleton />}>
+        <ClientProjects projects={clientProjectsData} />
       </Suspense>
 
-      <Suspense fallback={<ProjectsLoading />}>
-        <ConceptProjectsSection />
+      {/* Non-critical sections load dynamically */}
+      <Suspense
+        fallback={
+          <div className="h-96 bg-neutral-900 animate-pulse rounded-lg mx-8" />
+        }
+      >
+        <ConceptProjectSection concepts={conceptProjectsData} />
       </Suspense>
 
-      <Suspense fallback={<ProjectsLoading />}>
-        <TestimonialsSection />
+      <Suspense
+        fallback={
+          <div className="h-64 bg-neutral-900 animate-pulse rounded-lg mx-8" />
+        }
+      >
+        <ClientTestimonialSection testimonials={testimonialsData} />
       </Suspense>
 
-      <CTASection
-        title="Ready to engineer your success story?"
-        description="Let's discuss your technical requirements and create a custom solution that delivers measurable results."
-        buttonText="Contact Us"
-        buttonLink="/contact"
-        highlightWord="success story?"
-        features="Custom solutions • No templates • Guaranteed performance"
-      />
+      <Suspense
+        fallback={
+          <div className="h-48 bg-neutral-900 animate-pulse rounded-lg mx-8" />
+        }
+      >
+        <CTASection
+          title="Ready to engineer your success story?"
+          description="Let's discuss your technical requirements and create a custom solution that delivers measurable results."
+          buttonText="Contact Us"
+          buttonLink="/contact"
+          highlightWord="success story?"
+          features="Custom solutions • No templates • Guaranteed performance"
+        />
+      </Suspense>
     </div>
   );
 }
