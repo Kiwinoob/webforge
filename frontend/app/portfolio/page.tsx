@@ -3,6 +3,7 @@ import ClientProjectSection from "../../components/portfolio/client-project-sect
 import ConceptProjectSection from "../../components/portfolio/concept-project-section";
 import ClientTestimonialSection from "../../components/portfolio/client-testimonial-section";
 import CTASection from "../../components/common/cta-section";
+import PortfolioSchema from "../../components/portfolio/portfolio-schema";
 import { Metadata } from "next";
 import { constructMetadata } from "@/lib/seo";
 
@@ -135,6 +136,7 @@ export default async function PortfolioPage() {
 
   return (
     <div className="min-h-screen bg-neutral-950">
+      <PortfolioSchema />
       <HeroSection></HeroSection>
 
       {clientProjects.map((clientProject) => (

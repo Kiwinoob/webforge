@@ -3,6 +3,8 @@ import FAQSection from "../../components/services/faq-section";
 import InclusionsSection from "../../components/services/inclusions-section";
 import PackageSection from "../../components/services/package-section";
 import CTASection from "../../components/common/cta-section";
+import ServiceSchema from "../../components/services/service-schema";
+import FAQSchema from "../../components/services/faq-schema";
 import { Metadata } from "next";
 import { constructMetadata } from "@/lib/seo";
 
@@ -19,6 +21,8 @@ export const metadata: Metadata = constructMetadata({
 export default function ServicesPage() {
   return (
     <div className="min-h-screen bg-neutral-950">
+      <ServiceSchema />
+      <FAQSchema />
       <HeroSection></HeroSection>
       <InclusionsSection></InclusionsSection>
       <PackageSection></PackageSection>
