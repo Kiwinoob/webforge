@@ -12,7 +12,7 @@ export default function StructuredData() {
     description:
       "Webforge provides professional website creation services tailored to your business needs. From design to deployment, we handle it all.",
     address: {
-      "@type": "PostalAddress",
+      "@type": "online",
       addressCountry: "SG",
     },
     sameAs: [

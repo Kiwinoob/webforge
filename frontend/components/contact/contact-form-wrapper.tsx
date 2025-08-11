@@ -6,8 +6,8 @@ import { useState } from "react";
 import { useForm, type SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { multiStepFormSchema, type MultiStepFormData } from "@/lib/schemas";
-// STEP 1: Comment out reCAPTCHA-related imports
-// import { ReCaptchaProvider, useReCaptcha } from "next-recaptcha-v3";
+
+import { ReCaptchaProvider, useReCaptcha } from "next-recaptcha-v3";
 
 // Import your custom toast instead of regular toast
 import { customToast } from "@/components/common/custom-toast";
@@ -28,8 +28,7 @@ export default function ContactFormWrapper() {
   const [currentStep, setCurrentStep] = useState(1);
   const totalSteps = 4;
 
-  // STEP 2: Comment out the useReCaptcha hook call
-  // const { executeRecaptcha } = useReCaptcha();
+  const { executeRecaptcha } = useReCaptcha();
 
   const form = useForm<MultiStepFormData>({
     resolver: zodResolver(multiStepFormSchema),
@@ -77,8 +76,8 @@ export default function ContactFormWrapper() {
     }
 
     try {
-      // const token = await executeRecaptcha("form_submit"); // Commented out
-      const templateParams = { ...data };
+      const token = await executeRecaptcha("form_submit");
+      const templateParams = { ...data, "g-recaptcha-response": token };
 
       // Show loading toast
       customToast.themed.info({
