@@ -71,7 +71,7 @@ async function fetchTestimonials(): Promise<Testimonial[]> {
     console.log("Successfully fetched projects at", new Date().toISOString());
     return data;
   } catch (error) {
-    console.log("Backend server error: ", error);
+    console.log("Backend server error: ", error );
     return []; // return empty array
   }
 }
