@@ -3,6 +3,7 @@
 import { useState, useRef, useCallback, useEffect } from "react";
 import { Badge } from "@/components/ui/badge";
 import FadeIn from "../common/fade-in";
+import Image from 'next/image';
 
 interface ClientProjectProps {
   badge: string; 
@@ -199,16 +200,18 @@ export default function ClientProjectSection({
         </div>
 
         {/* Default image */}
-        <img
+        <Image
           src={defaultImage}
           alt={imageAlt}
+          fill
           className="w-full h-full object-cover opacity-80 transition-opacity duration-300 group-hover:opacity-0"
         />
 
         {/* Hover image */}
-        <img
+        <Image
           src={hoverImage}
           alt={imageAlt}
+          fill
           className="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-300 group-hover:opacity-100"
         />
       </div>

@@ -3,6 +3,7 @@ import ClientProjectSection from "../../components/portfolio/client-project-sect
 import ConceptProjectSection from "../../components/portfolio/concept-project-section";
 import ClientTestimonialSection from "../../components/portfolio/client-testimonial-section";
 import CTASection from "../../components/common/cta-section";
+import PortfolioSchema from "../../components/portfolio/portfolio-schema";
 import { Metadata } from "next";
 import { constructMetadata } from "@/lib/seo";
 
@@ -25,7 +26,7 @@ export const metadata: Metadata = constructMetadata({
 async function fetchClientProjects(): Promise<ClientProject[]> {
   try {
     const res = await fetch("http://54.251.165.197:8080/clientproject/get", {
-      cache: "no-store",
+      next: { revalidate: 3600 },
       signal: AbortSignal.timeout(5000),
     });
 
@@ -39,11 +40,11 @@ async function fetchClientProjects(): Promise<ClientProject[]> {
   }
 }
 
-// Function to fetch concept projects 
+// Function to fetch concept projects
 async function fetchConceptProjects(): Promise<ConceptProject[]> {
   try {
     const res = await fetch("http://54.251.165.197:8080/conceptproject/get", {
-      cache: "no-store",
+      next: { revalidate: 3600 },
       signal: AbortSignal.timeout(5000),
     });
 
@@ -57,11 +58,11 @@ async function fetchConceptProjects(): Promise<ConceptProject[]> {
   }
 }
 
-// Function to fetch testimonials 
+// Function to fetch testimonials
 async function fetchTestimonials(): Promise<Testimonial[]> {
   try {
     const res = await fetch("http://54.251.165.197:8080/testimonial/get", {
-      cache: "no-store",
+      next: { revalidate: 3600 },
       signal: AbortSignal.timeout(5000),
     });
 
@@ -84,28 +85,27 @@ export default async function PortfolioPage() {
 
   return (
     <div className="min-h-screen bg-neutral-950">
+      <PortfolioSchema />
       <HeroSection></HeroSection>
 
       {clientProjects.map((clientProject) => (
         <ClientProjectSection
-          key = {clientProject.id}
-          badge = {clientProject.badge} 
-          title = {clientProject.title}
-          subtitle = {clientProject.subtitle} 
-          description = {clientProject.description}
-          challenge = {clientProject.challenge} 
-          solution = {clientProject.solution}
-          defaultImage = {clientProject.defaultImage} 
-          hoverImage = {clientProject.hoverImage}
-          imageAlt = {clientProject.imageAlt} 
-          imagePosition = {clientProject.imagePosition}
-          url = {clientProject.url}
+          key={clientProject.id}
+          badge={clientProject.badge}
+          title={clientProject.title}
+          subtitle={clientProject.subtitle}
+          description={clientProject.description}
+          challenge={clientProject.challenge}
+          solution={clientProject.solution}
+          defaultImage={clientProject.defaultImage}
+          hoverImage={clientProject.hoverImage}
+          imageAlt={clientProject.imageAlt}
+          imagePosition={clientProject.imagePosition}
+          url={clientProject.url}
         />
       ))}
 
-      <ConceptProjectSection
-        concepts={conceptProjects}
-        />
+      <ConceptProjectSection concepts={conceptProjects} />
 
       <ClientTestimonialSection testimonials={testimonials} />
 

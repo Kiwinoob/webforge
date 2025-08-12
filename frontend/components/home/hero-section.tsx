@@ -1,30 +1,38 @@
+"use client";
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { ArrowUpRight } from "lucide-react";
 import FadeIn from "../common/fade-in";
 import Link from "next/link";
-
-// A small component for the statistics on the left side.
-function StatItem({ value, label }: { value: string; label: string }) {
-  return (
-    <div className="text-left lg:text-left">
-      <p className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-[#C1440E] whitespace-nowrap">
-        {value}
-      </p>
-      <p className="text-[9px] sm:text-[10px] md:text-xs font-semibold uppercase tracking-wide lg:tracking-widest text-neutral-400 mt-1 whitespace-nowrap">
-        {label}
-      </p>
-    </div>
-  );
-}
+import ForgeAnimation from "../common/forge-animation";
 
 export default function HeroSection() {
   return (
-    <div className="bg-black text-white font-sans min-h-screen pt-16 sm:pt-20 lg:pt-0">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-6 sm:py-8 md:py-12 lg:py-24 h-full">
+    <div className="relative bg-gradient-to-br from-black via-neutral-950 to-black text-white font-sans min-h-screen pt-16 sm:pt-20 lg:pt-0 overflow-hidden">
+      {/* --- 2. USE the new component --- */}
+      <ForgeAnimation />
+
+      {/* Clean accent gradient - top right */}
+      <div className="absolute -top-40 -right-40 w-80 h-80 bg-gradient-to-bl from-[#C1440E]/20 via-[#D85D25]/10 to-transparent rounded-full blur-3xl" />
+
+      {/* Clean accent gradient - bottom left */}
+      <div className="absolute -bottom-40 -left-40 w-96 h-96 bg-gradient-to-tr from-[#C1440E]/15 via-[#FF5733]/8 to-transparent rounded-full blur-3xl" />
+
+      {/* Subtle dot pattern */}
+      <div
+        className="absolute inset-0 opacity-[0.03]"
+        style={{
+          backgroundImage:
+            "radial-gradient(circle at 1px 1px, rgba(255,255,255,0.3) 1px, transparent 0)",
+          backgroundSize: "32px 32px",
+        }}
+      />
+
+      {/* Content */}
+      <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-6 sm:py-8 md:py-12 lg:py-24 h-full">
         <div className="flex flex-col lg:flex-row lg:justify-between lg:gap-8 lg:items-end lg:min-h-[70vh]">
           {/* Middle Column: Main Content */}
-          <div className="flex-1 mt-8 sm:mt-10 md:mt-16 lg:mt-32 lg:self-start lg:pt-8">
+          <div className="flex-1 mt-8 sm:mt-10 md:mt-16 lg:mt-16 lg:self-start lg:pt-8">
             {/* Headline with subtle stagger on each line */}
             <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold leading-tight tracking-tighter">
               <FadeIn direction="up" distance={20} duration={0.5}>

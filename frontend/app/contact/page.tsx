@@ -3,6 +3,7 @@
 import { Metadata } from "next";
 import { constructMetadata } from "@/lib/seo";
 import ContactFormWrapper from "@/components/contact/contact-form-wrapper";
+import ContactSchema from "@/components/contact/contact-schema";
 
 // 1. Export your metadata from the Server Component
 export const metadata: Metadata = constructMetadata({
@@ -19,6 +20,7 @@ export default function ContactPage() {
   // 3. Render the Client Component inside the Server Component
   return (
     <div className="min-h-screen bg-neutral-950 relative">
+      <ContactSchema />
       <ContactFormWrapper />
     </div>
   );
