@@ -75,57 +75,6 @@ async function fetchTestimonials(): Promise<Testimonial[]> {
   }
 }
 
-const concepts = [
-  {
-    title: "Dragon's Den",
-    description:
-      "Modern restaurant website concept with elegant design and menu display.",
-    image: "/portfolio/DragonsDen_MockupNew.png",
-    hoverImage: "/portfolio/DragonsDen_Hover.png",
-    imageAlt: "Restaurant website concept",
-    tags: "Food & Beverage • Restaurant • Menu Display",
-    siteUrl: "https://dragons-den-sg.vercel.app",
-  },
-  {
-    title: "Furry Friends",
-    description:
-      "Clean, modern design for Singapore pet care startup with service booking and team profiles.",
-    image: "/portfolio/FurryFriends_Mockup.png",
-    hoverImage: "/portfolio/FurryFriends_Hover.png",
-    imageAlt: "Tech startup website concept",
-    tags: "Healthcare • Pet Care • Team Profiles",
-    siteUrl: "https://furry-friends-webforge.vercel.app/",
-  },
-  {
-    title: "Crochet & Co",
-    description:
-      "Elegant ecommerce website for crochet products with online store and customer reviews.",
-    image: "/portfolio/CrochetCo_Mockup.png",
-    hoverImage: "/portfolio/CrochetCo_Hover.png",
-    imageAlt: "Professional services website concept",
-    tags: "E-commerce • Retail • Payment Integration",
-    siteUrl:
-      "https://www.figma.com/proto/Uh0BcNf3MUNU8jgpYXlUnl/Crochet-and-Co.?node-id=0-3&starting-point-node-id=0%3A3",
-  },
-];
-
-const testimonials = [
-  {
-    quote:
-      "WebForge's technical approach transformed our digital presence. They were a pleasure to work with.",
-    author: "Benny Wong",
-    title: "Managing Director",
-    company: "Belmacs Engineering",
-  },
-  {
-    quote:
-      "WebForge transformed our outdated website into a modern, professional platform that truly represents our engineering expertise. Their attention to detail and understanding of our industry was exceptional.",
-    author: "Allson Sim",
-    title: "Project Manager",
-    company: "Perform Industries",
-  },
-];
-
 export default async function PortfolioPage() {
   const [clientProjects, conceptProjects, testimonials] = await Promise.all([
     fetchClientProjects(),
@@ -157,8 +106,6 @@ export default async function PortfolioPage() {
       <ConceptProjectSection
         concepts={conceptProjects}
         />
-      
-      
 
       <ClientTestimonialSection testimonials={testimonials} />
 
