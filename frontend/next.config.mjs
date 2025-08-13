@@ -19,25 +19,25 @@ const nextConfig = {
   async redirects() {
     return [
       {
-        source: '/:path*', // catch-all route
+        source: '/:path*',
         has: [
           {
             type: 'host',
-            value: 'webforge.sg', // matching the non-www domain
+            value: 'www.webforge.sg', // when `www` is accessed
           },
         ],
-        destination: 'https://webforge.sg/:path*', // redirect to https version of the site
+        destination: 'https://webforge.sg/:path*', // redirect to non-www version
         permanent: true,
       },
       {
-        source: '/:path*', // catch-all route
+        source: '/:path*',
         has: [
           {
             type: 'host',
-            value: 'www.webforge.sg', // matching the www subdomain
+            value: 'webforge.sg', // no redirection if it's already non-www
           },
         ],
-        destination: 'https://webforge.sg/:path*', // redirect to the non-www version
+        destination: 'https://webforge.sg/:path*', // ensure https version
         permanent: true,
       },
     ];
