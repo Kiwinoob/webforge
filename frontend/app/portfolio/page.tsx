@@ -39,7 +39,7 @@ const clientProjects: ClientProject[] = [
     title: "Perform Industries",
     subtitle: "Website Overhaul (WIP)",
     description:
-      "We are in the midst of reimaging Perform Industries' website to better reflect their professionalism and industry expertise. From a re-designed interface to improved navigation and mobile optimization, every element was built with clarity, performance, and purpose in mind",
+      "We are in the midst of re-designing Perform Industries' website to better reflect their professionalism and industry expertise. From a re-designed interface to improved navigation and mobile optimization, every element was built with clarity, performance, and purpose in mind",
     challenge:
       "Legacy static site with long load times and low-quality images",
     solution:
