@@ -18,25 +18,29 @@ const nextConfig = {
   },
   async redirects() {
     return [
-      // Redirect from HTTP to HTTPS
       {
-        source: '/:path*',
+        source: '/:path*', // catch-all route
         has: [
           {
             type: 'host',
-            value: 'webforge.sg', // your domain without "www"
+            value: 'webforge.sg', // matching the non-www domain
           },
         ],
-        destination: 'https://webforge.sg/:path*',
+        destination: 'https://webforge.sg/:path*', // redirect to https version of the site
         permanent: true,
       },
-      // Redirect from www to non-www (optional)
       {
-        source: 'http://www.webforge.sg/:path*',
-        destination: 'https://webforge.sg/:path*',
+        source: '/:path*', // catch-all route
+        has: [
+          {
+            type: 'host',
+            value: 'www.webforge.sg', // matching the www subdomain
+          },
+        ],
+        destination: 'https://webforge.sg/:path*', // redirect to the non-www version
         permanent: true,
       },
-    ]
+    ];
   },
 };
 
