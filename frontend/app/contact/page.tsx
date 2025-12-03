@@ -13,6 +13,7 @@ export const metadata: Metadata = constructMetadata({
   keywords:
     "Contact Webforge, WebforgeSG, Web Design Quote, Web Development Project, UI/UX Design, Custom web design, small business websites",
   ogType: "website",
+  pathname: "/contact",
 });
 
 // 2. This is now a Server Component

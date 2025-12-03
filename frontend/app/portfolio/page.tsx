@@ -40,8 +40,7 @@ const clientProjects: ClientProject[] = [
     subtitle: "Website Overhaul (WIP)",
     description:
       "We are in the midst of re-designing Perform Industries' website to better reflect their professionalism and industry expertise. From a re-designed interface to improved navigation and mobile optimization, every element was built with clarity, performance, and purpose in mind",
-    challenge:
-      "Legacy static site with long load times and low-quality images",
+    challenge: "Legacy static site with long load times and low-quality images",
     solution:
       "Custom Next.js application with integrated CMS and project portal",
     defaultImage:
@@ -109,12 +108,12 @@ const testimonials: Testimonial[] = [
 
 export const metadata: Metadata = constructMetadata({
   title: "WebForge | Portfolio",
-
   description:
     "Webforge provides professional website creation services tailored to your business needs. From design to deployment, we handle it all.",
   keywords:
     "Webforge, WebforgeSG, Web Design, Web Development, UI/UX Design, Graphic Design, Digital Marketing, SEO, Content Writing, Photo Editing, Custom web design, small business websites,",
   ogType: "website",
+  pathname: "/portfolio",
 });
 
 // // Function to fetch Client Projects
