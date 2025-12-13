@@ -14,6 +14,7 @@ export async function generateMetadata(): Promise<Metadata> {
     keywords:
       "Webforge, Webforge.sg, Web Design, Web Development, UI/UX Design, Graphic Design, Digital Marketing, SEO, Content Writing, Photo Editing, Custom web design, small business websites,",
     ogType: "website",
+    pathname: "",
   });
 }
 export default function HomePage() {
