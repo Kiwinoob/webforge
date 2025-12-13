@@ -24,18 +24,6 @@ export function constructMetadata({
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://webforge.sg";
   const canonicalUrl = `${baseUrl}${pathname}`;
 
-  {
-    /* DEBUGGING PURPOSES
-  console.error(
-    "DEBUG: Generating metadata for:",
-    pathname,
-    "Canonical:",
-    canonicalUrl
-  );
-
-  */
-  }
-
   return {
     title,
     description,
