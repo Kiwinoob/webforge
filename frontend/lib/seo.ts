@@ -24,7 +24,8 @@ export function constructMetadata({
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://webforge.sg";
   const canonicalUrl = `${baseUrl}${pathname}`;
 
-  {/* DEBUGGING PURPOSES
+  {
+    /* DEBUGGING PURPOSES
   console.error(
     "DEBUG: Generating metadata for:",
     pathname,
@@ -32,7 +33,8 @@ export function constructMetadata({
     canonicalUrl
   );
 
-  */}
+  */
+  }
 
   return {
     title,
@@ -40,7 +42,7 @@ export function constructMetadata({
     keywords,
     authors: [{ name: "Webforge" }],
     alternates: {
-      canonical: pathname,
+      canonical: canonicalUrl,
     },
     openGraph: {
       title,

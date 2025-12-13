@@ -1,0 +1,101 @@
+# WebForge Project Context
+
+## Project Overview
+WebForge is a web design and development agency website built with Next.js 14, React, Tailwind CSS, and Framer Motion. It showcases services, portfolio projects (client and concept), and provides a contact form.
+
+## Services Provided
+WebForge offers professional website creation services tailored to business needs:
+- **Web Design & Development**: Custom hand-coded websites (Next.js), responsive design, and UI/UX mockups.
+- **Service Packages**:
+  - **Starter**: Entry-level for new businesses (Static pages, SEO setup).
+  - **Professional**: For established companies (Multi-page, CMS options).
+  - **Enterprise**: Full-scale solutions (Dynamic pages, Analytics, complex integrations).
+- **Core Inclusions**: Mobile optimization, Basic SEO setup, Web hosting, Launch support.
+- **Additional Services**: Graphic Design, Content Writing, Digital Marketing, Photo Editing.
+
+## Tech Stack
+- **Framework**: Next.js 14 (App Router)
+- **Language**: TypeScript
+- **Styling**: Tailwind CSS, Shadcn UI
+- **Animations**: Framer Motion
+- **Backend**: Custom backend + Firebase (Storage)
+
+## Development Standards
+
+### SEO & Metadata
+- **Canonical URLs**: MUST be absolute, self-referencing URLs (e.g., `https://webforge.sg/contact`).
+- **OpenGraph**: Images must use absolute URLs.
+- **Implementation**: All pages must use `frontend/lib/seo.ts` to generate metadata.
+
+## Key Files
+
+### `frontend/lib/seo.ts`
+Central utility for metadata generation. Enforces canonical URL rules.
+
+```typescript
+import { Metadata } from "next";
+
+type OpenGraphType = "website" | "article";
+
+type SEOProps = {
+  title?: string;
+  description?: string;
+  keywords?: string;
+  ogImage?: string;
+  ogType?: OpenGraphType;
+  twitterCard?: string;
+  pathname?: string;
+};
+
+export function constructMetadata({
+  title = "Webforge | Web Design & Development Singapore",
+  description = "Webforge provides professional website creation services tailored to your business needs. From design to deployment, we handle it all.",
+  keywords = "Webforge,WebforgeSG, Web Design, Web Development, UI/UX Design, Graphic Design, Digital Marketing, SEO, Content Writing, Photo Editing, Custom web design, small business websites,",
+  ogImage = "/webforge-og.png",
+  ogType = "website",
+  twitterCard = "summary_large_image",
+  pathname = "/",
+}: SEOProps = {}): Metadata {
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://webforge.sg";
+  const canonicalUrl = `${baseUrl}${pathname}`;
+
+  return {
+    title,
+    description,
+    keywords,
+    authors: [{ name: "Webforge" }],
+    alternates: {
+      canonical: canonicalUrl,
+    },
+    openGraph: {
+      title,
+      description,
+      url: canonicalUrl,
+      siteName: "Webforge | Professional Website Creation Services",
+      // ... images logic
+      locale: "en_US",
+      type: ogType,
+    },
+    // ... twitter and icons
+    metadataBase: new URL(baseUrl),
+  };
+}
+```
+
+## Directory Structure
+- `frontend/app`: Next.js App Router pages
+  - `page.tsx`: Home page
+  - `contact/page.tsx`: Contact page
+  - `services/page.tsx`: Services page
+  - `portfolio/page.tsx`: Portfolio page
+  - `layout.tsx`: Root layout with Navbar/Footer
+- `frontend/components`: React components
+  - `home`: Home page specific sections (Hero, Process, About, CTA)
+  - `portfolio`: Portfolio page sections
+  - `services`: Services page sections
+  - `contact`: Contact form components
+  - `common`: Shared components
+  - `ui`: Reusable UI components (buttons, inputs, etc.)
+- `frontend/lib`: Utilities
+  - `seo.ts`: Metadata construction helper
+  - `utils.ts`: Helper functions
