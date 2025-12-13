@@ -19,7 +19,7 @@ export function constructMetadata({
   ogImage = "/webforge-og.png",
   ogType = "website",
   twitterCard = "summary_large_image",
-  pathname = "/",
+  pathname = "",
 }: SEOProps = {}): Metadata {
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://webforge.sg";
   const canonicalUrl = `${baseUrl}${pathname}`;
